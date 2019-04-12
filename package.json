@@ -1,0 +1,83 @@
+{
+  "name": "@lcluber/indiumjs",
+  "version": "0.3.0",
+  "description": "Key bindings library written in TypeScript with multiple keystroke detection.",
+  "keywords": [
+    "key binding"
+  ],
+  "homepage": "http://indiumjs.lcluber.com",
+  "main": "dist/indium",
+  "types": "dist/indium",
+  "bugs": {
+    "url": "https://github.com/LCluber/Indium.js/issues",
+    "email": ""
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/LCluber/Indium.js.git"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "Ludovic Cluber",
+    "url": "http://www.lcluber.com/",
+    "email": "http://www.lcluber.com/contact"
+  },
+  "contributors": [],
+  "scripts": {
+    "start": "node ./bin/www"
+  },
+  "files": [
+    "dist/"
+  ],
+  "dependencies": {
+    "body-parser": "1.16.1",
+    "cookie-parser": "1.4.3",
+    "express": "4.14.1",
+    "pug": "2.0.0-beta11",
+    "morgan": "1.8.1",
+    "serve-favicon": "2.4.0",
+    "i18next": "4.0.0",
+    "i18next-express-middleware": "1.0.2",
+    "i18next-node-fs-backend": "0.1.3",
+    "@lcluber/type6js": "1.0.5",
+    "@lcluber/chjs": "0.1.2",
+    "@lcluber/weejs": "0.1.10",
+    "@lcluber/mouettejs": "0.2.7"
+  },
+  "devDependencies": {
+    "@fortawesome/fontawesome-free": "5.3.1",
+    "babel-core": "6.26.3",
+    "babel-preset-es2015": "6.24.1",
+    "bootstrap": "3.3.7",
+    "jquery": "3.2.1",
+    "jquery-easing": "0.0.1",
+    "connect-livereload": "0.6.0",
+    "grunt": "1.0.1",
+    "grunt-contrib-clean": "1.1.0",
+    "grunt-contrib-uglify": "3.0.1",
+    "grunt-contrib-cssmin": "2.2.0",
+    "grunt-contrib-concat": "1.0.1",
+    "grunt-contrib-copy": "1.0.0",
+    "grunt-contrib-sass": "1.0.0",
+    "grunt-contrib-htmlmin": "2.4.0",
+    "grunt-contrib-jshint": "1.1.0",
+    "grunt-contrib-csslint": "2.0.0",
+    "grunt-strip-code": "1.0.6",
+    "grunt-contrib-watch": "1.0.0",
+    "grunt-concurrent": "2.3.1",
+    "grunt-nodemon": "0.4.2",
+    "grunt-open": "0.2.3",
+    "grunt-ts": "5.5.1",
+    "grunt-tslint": "5.0.1",
+    "grunt-typedoc": "0.2.4",
+    "grunt-rollup": "9.0.0",
+    "grunt-sass": "3.0.1",
+    "node-sass": "4.11.0",
+    "rollup-plugin-babel": "3.0.4",
+    "rollup-plugin-node-resolve": "3.3.0",
+    "time-grunt": "1.4.0",
+    "tslint": "5.9.1",
+    "typedoc": "0.11.1",
+    "typescript": "3.4.3"
+  }
+}

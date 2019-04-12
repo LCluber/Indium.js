@@ -1,51 +1,6 @@
-## Synopsis
-
-[Indium.js](http://indiumjs.lcluber.com) is a key bindings library written in TypeScript with multiple keystroke detection.
-
-## Motivation
-
-The purpose of this library is to provide a simple and easy to use key binding declaration.
-
-## Installation
-
-### NPM
-
-```bash
-$ npm install @lcluber/indiumjs
-```
-
-### Yarn
-
-```bash
-$ yarn add @lcluber/indiumjs
-```
-
-## Demo
-
-See a basic example **[here](http://indiumjs.lcluber.com/#example)**.
-
-## Usage
-
-Learn how to use it **[here](http://indiumjs.lcluber.com/#source)**.
-
-## API Reference
-
-Read the documentation **[here](http://indiumjs.lcluber.com/doc/)**.
-
-## Tests
-
-No tests to run yet
-
-## Contributors
-
-There is still a lot of work to do on this project and I would be glad to get all the help you can provide.
-To contribute you can clone the project on **[GitHub](https://github.com/LCluber/Indium.js)** and see  **NOTICE.md** for detailed installation walkthrough of the project.
-
-## License
-
 MIT License
 
-Copyright (c) 2015 Ludovic CLUBER
+Copyright (c) 2013 Ludovic CLUBER
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
