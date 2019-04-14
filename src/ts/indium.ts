@@ -1,3 +1,2 @@
-export { Zone } from './zone';
-export { Gesture } from './gesture';
-export { Screen } from './screen';
+// export { Zone } from './zone';
+export { Screen } from './zones/screen';

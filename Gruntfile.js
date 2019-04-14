@@ -490,7 +490,7 @@ module.exports = function(grunt){
                         //build site
                         grunt.task.run('website');
                         //build documentation
-                        grunt.task.run('doc');
+                        //grunt.task.run('doc');
                         // launch server and watch for changes
                         grunt.task.run('serve');
                       }

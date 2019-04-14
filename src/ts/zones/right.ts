@@ -1,9 +1,11 @@
+import { Zone } from './zone';
 
-export class Right {
+export class Right extends Zone {
 
   private limit: number ;
 
   constructor(limit: number) {
+    super();
     this.limit = limit;
   }
 
