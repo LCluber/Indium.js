@@ -61,6 +61,18 @@ class TouchEnd {
     }
 }
 
+class TouchCancel {
+    constructor(callback) {
+        this.maxDuration = 300;
+        this.minDuration = 30;
+        this.maxMovement = 30;
+        this.callback = callback;
+    }
+    trigger(touchHandler) {
+        this.callback(touchHandler);
+    }
+}
+
 class Tap {
     constructor(callback) {
         this.maxDuration = 300;
@@ -685,6 +697,9 @@ class Zone {
     touchEnd(callback) {
         this.gestures.touchEnd = new TouchEnd(callback);
     }
+    touchCancel(callback) {
+        this.gestures.touchCancel = new TouchCancel(callback);
+    }
     tap(callback) {
         this.gestures.tap = new Tap(callback);
     }
@@ -739,7 +754,6 @@ class Listeners {
         let touches = event.changedTouches;
         for (let i = 0; i < touches.length; i++) {
             let touch = touches[i];
-            console.log("touchstart:", touch);
             let touchHandler = new TouchHandler(touch.identifier, touch.pageX, touch.pageY);
             this.ongoingTouches.push(touchHandler);
             this.gestures.touchStart.trigger(touchHandler);
@@ -751,7 +765,6 @@ class Listeners {
             let touch = touches[i];
             let index = this.getOngoingTouchId(touch.identifier);
             if (index !== null) {
-                console.log("touchmove:", touch);
                 this.ongoingTouches[index].update(touch);
                 this.gestures.touchMove.trigger(this.ongoingTouches[index]);
             }
@@ -764,7 +777,6 @@ class Listeners {
             let index = this.getOngoingTouchId(touch.identifier);
             if (index !== null) {
                 this.ongoingTouches[index].end();
-                console.log("touchend:", touch);
                 this.gestures.touchEnd.trigger(this.ongoingTouches[index]);
                 this.ongoingTouches.splice(index, 1);
             }
@@ -777,7 +789,7 @@ class Listeners {
             let touch = touches[i];
             let index = this.getOngoingTouchId(touch.identifier);
             if (index !== null) {
-                console.log("touchcancel:", touches);
+                this.gestures.touchCancel.trigger(this.ongoingTouches[index]);
                 this.ongoingTouches.splice(index, 1);
             }
         }

@@ -1,11 +1,11 @@
 {
   "name": "@lcluber/indiumjs",
   "version": "0.1.0",
-  "description": "Key bindings library written in TypeScript with multiple keystroke detection.",
+  "description": "Touch gestures library written in TypeScript with multiple touches detection.",
   "keywords": [
     "key binding"
   ],
-  "homepage": "http://indiumjs.lcluber.com",
+  "homepage": "https://github.com/LCluber/Indium.js",
   "main": "dist/indium",
   "types": "dist/indium",
   "bugs": {

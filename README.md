@@ -1,10 +1,10 @@
 ## Synopsis
 
-[Indium.js](http://indiumjs.lcluber.com) is a key bindings library written in TypeScript with multiple keystroke detection.
+[Indium.js](http://indiumjs.lcluber.com) is a touch gestures library written in TypeScript with multiple touches detection.
 
 ## Motivation
 
-The purpose of this library is to provide a simple and easy to use key binding declaration.
+The purpose of this library is to provide a simple and easy way to add touch gestures to your app.
 
 ## Installation
 
@@ -22,15 +22,69 @@ $ yarn add @lcluber/indiumjs
 
 ## Demo
 
-See a basic example **[here](http://indiumjs.lcluber.com/#example)**.
+See a basic example **[here](http://vortalcombat.roostrjs.com)**.
 
 ## Usage
 
-Learn how to use it **[here](http://indiumjs.lcluber.com/#source)**.
+### ES6
+
+```html
+<canvas id="myCanvas"></canvas>
+```
+
+```javascript
+import { Screen } from '@lcluber/indiumjs';
+
+function shipMove(touch) {
+  console.log('touch',touch);
+}
+
+function shipStop(touch) {
+  console.log('end',touch);
+}
+
+var touchScreen = new Screen('myCanvas');
+touchScreen.touchStart(shipMove);
+touchScreen.touchMove(shipMove);
+touchScreen.touchEnd(shipStop);
+touchScreen.touchCancel(shipStop);
+
+```
+
+### IIFE
+
+```html
+<script src="node-modules/@lcluber/indiumjs/dist/indium.iife.min.js"></script>
+
+<canvas id="myCanvas"></canvas>
+```
+
+```javascript
+function shipMove(touch) {
+  console.log('touch',touch);
+}
+
+function shipStop(touch) {
+  console.log('end',touch);
+}
+
+var touchScreen = new Indium.Screen('myCanvas');
+touchScreen.touchStart(shipMove);
+touchScreen.touchMove(shipMove);
+touchScreen.touchEnd(shipStop);
+touchScreen.touchCancel(shipStop);
+```
 
 ## API Reference
 
-Read the documentation **[here](http://indiumjs.lcluber.com/doc/)**.
+```javascript
+
+Screen.touchStart(callback: Function);
+Screen.touchMove(callback: Function);
+Screen.touchEnd(callback: Function);
+Screen.touchCancel(callback: Function);
+
+```
 
 ## Tests
 
@@ -45,7 +99,7 @@ To contribute you can clone the project on **[GitHub](https://github.com/LCluber
 
 MIT License
 
-Copyright (c) 2015 Ludovic CLUBER
+Copyright (c) 2016 Ludovic CLUBER
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

@@ -24,7 +24,7 @@ module.exports = function(grunt){
 
   var banner    = '/** MIT License\n' +
     '* \n' +
-    '* Copyright (c) 2013 Ludovic CLUBER \n' +
+    '* Copyright (c) 2016 Ludovic CLUBER \n' +
     '* \n' +
     '* Permission is hereby granted, free of charge, to any person obtaining a copy\n' +
     '* of this software and associated documentation files (the "Software"), to deal\n' +

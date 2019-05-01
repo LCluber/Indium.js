@@ -65,6 +65,19 @@ var Indium = (function (exports) {
         return TouchEnd;
     }();
 
+    var TouchCancel = function () {
+        function TouchCancel(callback) {
+            this.maxDuration = 300;
+            this.minDuration = 30;
+            this.maxMovement = 30;
+            this.callback = callback;
+        }
+        TouchCancel.prototype.trigger = function (touchHandler) {
+            this.callback(touchHandler);
+        };
+        return TouchCancel;
+    }();
+
     var Tap = function () {
         function Tap(callback) {
             this.maxDuration = 300;
@@ -1682,6 +1695,9 @@ var Indium = (function (exports) {
         Zone.prototype.touchEnd = function (callback) {
             this.gestures.touchEnd = new TouchEnd(callback);
         };
+        Zone.prototype.touchCancel = function (callback) {
+            this.gestures.touchCancel = new TouchCancel(callback);
+        };
         Zone.prototype.tap = function (callback) {
             this.gestures.tap = new Tap(callback);
         };
@@ -1738,7 +1754,6 @@ var Indium = (function (exports) {
             var touches = event.changedTouches;
             for (var i = 0; i < touches.length; i++) {
                 var touch = touches[i];
-                console.log("touchstart:", touch);
                 var touchHandler = new TouchHandler(touch.identifier, touch.pageX, touch.pageY);
                 this.ongoingTouches.push(touchHandler);
                 this.gestures.touchStart.trigger(touchHandler);
@@ -1750,7 +1765,6 @@ var Indium = (function (exports) {
                 var touch = touches[i];
                 var index = this.getOngoingTouchId(touch.identifier);
                 if (index !== null) {
-                    console.log("touchmove:", touch);
                     this.ongoingTouches[index].update(touch);
                     this.gestures.touchMove.trigger(this.ongoingTouches[index]);
                 }
@@ -1763,7 +1777,6 @@ var Indium = (function (exports) {
                 var index = this.getOngoingTouchId(touch.identifier);
                 if (index !== null) {
                     this.ongoingTouches[index].end();
-                    console.log("touchend:", touch);
                     this.gestures.touchEnd.trigger(this.ongoingTouches[index]);
                     this.ongoingTouches.splice(index, 1);
                 }
@@ -1776,7 +1789,7 @@ var Indium = (function (exports) {
                 var touch = touches[i];
                 var index = this.getOngoingTouchId(touch.identifier);
                 if (index !== null) {
-                    console.log("touchcancel:", touches);
+                    this.gestures.touchCancel.trigger(this.ongoingTouches[index]);
                     this.ongoingTouches.splice(index, 1);
                 }
             }

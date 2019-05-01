@@ -34,6 +34,7 @@ export interface IGestures {
     touchStart: IGesture;
     touchMove: IGesture;
     touchEnd: IGesture;
+    touchCancel: IGesture;
     tap: IGesture;
     doubleTap: IGesture;
     press: IGesture;
