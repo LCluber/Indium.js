@@ -1,6 +1,6 @@
 {
   "name": "@lcluber/indiumjs",
-  "version": "0.3.0",
+  "version": "0.1.0",
   "description": "Key bindings library written in TypeScript with multiple keystroke detection.",
   "keywords": [
     "key binding"

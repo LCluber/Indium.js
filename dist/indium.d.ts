@@ -31,6 +31,9 @@ export interface IGesture {
     trigger: Function;
 }
 export interface IGestures {
+    touchStart: IGesture;
+    touchMove: IGesture;
+    touchEnd: IGesture;
     tap: IGesture;
     doubleTap: IGesture;
     press: IGesture;
@@ -59,7 +62,7 @@ export declare class TouchHandler {
     lastPosition: Vector2;
     direction: Vector2;
     squaredDistance: number;
-    constructor(identifier: number, pageY: number, pageX: number);
+    constructor(identifier: number, pageX: number, pageY: number);
     update(touchInit: TouchInit): TouchHandler;
     private setDirection;
     private setDistance;

@@ -26,6 +26,45 @@
 var Indium = (function (exports) {
     'use strict';
 
+    var TouchStart = function () {
+        function TouchStart(callback) {
+            this.maxDuration = 300;
+            this.minDuration = 30;
+            this.maxMovement = 30;
+            this.callback = callback;
+        }
+        TouchStart.prototype.trigger = function (touchHandler) {
+            this.callback(touchHandler);
+        };
+        return TouchStart;
+    }();
+
+    var TouchMove = function () {
+        function TouchMove(callback) {
+            this.maxDuration = 300;
+            this.minDuration = 30;
+            this.maxMovement = 30;
+            this.callback = callback;
+        }
+        TouchMove.prototype.trigger = function (touchHandler) {
+            this.callback(touchHandler);
+        };
+        return TouchMove;
+    }();
+
+    var TouchEnd = function () {
+        function TouchEnd(callback) {
+            this.maxDuration = 300;
+            this.minDuration = 30;
+            this.maxMovement = 30;
+            this.callback = callback;
+        }
+        TouchEnd.prototype.trigger = function (touchHandler) {
+            this.callback(touchHandler);
+        };
+        return TouchEnd;
+    }();
+
     var Tap = function () {
         function Tap(callback) {
             this.maxDuration = 300;
@@ -60,7 +99,6 @@ var Indium = (function (exports) {
             this.callback = callback;
         }
         Press.prototype.trigger = function (touchHandler) {
-            console.log('trigger');
             this.callback(touchHandler);
         };
         return Press;
@@ -1635,6 +1673,15 @@ var Indium = (function (exports) {
         function Zone() {
             this.gestures = {};
         }
+        Zone.prototype.touchStart = function (callback) {
+            this.gestures.touchStart = new TouchStart(callback);
+        };
+        Zone.prototype.touchMove = function (callback) {
+            this.gestures.touchMove = new TouchMove(callback);
+        };
+        Zone.prototype.touchEnd = function (callback) {
+            this.gestures.touchEnd = new TouchEnd(callback);
+        };
         Zone.prototype.tap = function (callback) {
             this.gestures.tap = new Tap(callback);
         };
@@ -1651,7 +1698,7 @@ var Indium = (function (exports) {
     }();
 
     var TouchHandler = function () {
-        function TouchHandler(identifier, pageY, pageX) {
+        function TouchHandler(identifier, pageX, pageY) {
             this.identifier = identifier;
             this.startTime = +new Date();
             this.startPosition = new Vector2(pageX, pageY);
@@ -1692,7 +1739,9 @@ var Indium = (function (exports) {
             for (var i = 0; i < touches.length; i++) {
                 var touch = touches[i];
                 console.log("touchstart:", touch);
-                this.ongoingTouches.push(new TouchHandler(touch.identifier, touch.pageX, touch.pageY));
+                var touchHandler = new TouchHandler(touch.identifier, touch.pageX, touch.pageY);
+                this.ongoingTouches.push(touchHandler);
+                this.gestures.touchStart.trigger(touchHandler);
             }
         };
         Listeners.prototype.handleMove = function (event) {
@@ -1703,7 +1752,7 @@ var Indium = (function (exports) {
                 if (index !== null) {
                     console.log("touchmove:", touch);
                     this.ongoingTouches[index].update(touch);
-                    this.gestures.press.trigger(this.ongoingTouches[index]);
+                    this.gestures.touchMove.trigger(this.ongoingTouches[index]);
                 }
             }
         };
@@ -1715,6 +1764,7 @@ var Indium = (function (exports) {
                 if (index !== null) {
                     this.ongoingTouches[index].end();
                     console.log("touchend:", touch);
+                    this.gestures.touchEnd.trigger(this.ongoingTouches[index]);
                     this.ongoingTouches.splice(index, 1);
                 }
             }

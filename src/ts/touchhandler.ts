@@ -24,8 +24,8 @@ export class TouchHandler /*extends Touch*/ {
   lastPosition:     Vector2;
   direction:        Vector2;
   squaredDistance:  number;
-  
-  constructor (/*touchInit: TouchInit*/identifier: number, pageY: number, pageX: number) {
+
+  constructor (/*touchInit: TouchInit*/identifier: number, pageX: number, pageY: number) {
     // super(touchInit);
     this.identifier      =   identifier;
     this.startTime       = + new Date();
@@ -44,17 +44,17 @@ export class TouchHandler /*extends Touch*/ {
   }
 
   // private getGesture(){
-  // 
+  //
   // }
-  // 
+  //
   // private isPress() {
-  // 
+  //
   // }
 
   private setDirection(): void {
     this.direction.subtractVectors(this.lastPosition, this.startPosition);
   }
-  
+
   private setDistance(): void {
     this.squaredDistance = this.lastPosition.getSquaredDistance(this.startPosition);
   }

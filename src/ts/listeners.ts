@@ -22,8 +22,9 @@ export class Listeners {
     let touches = event.changedTouches;
     for (let i = 0; i < touches.length; i++) {
       let touch = touches[i];
-      console.log("touchstart:", touch);
-      this.ongoingTouches.push(new TouchHandler(touch.identifier, touch.pageX, touch.pageY ));
+      let touchHandler = new TouchHandler(touch.identifier, touch.pageX, touch.pageY );
+      this.ongoingTouches.push(touchHandler);
+      this.gestures.touchStart.trigger(touchHandler);
     }
   }
 
@@ -33,9 +34,8 @@ export class Listeners {
       let touch = touches[i];
       let index = this.getOngoingTouchId(touch.identifier);
       if (index !== null) {
-        console.log("touchmove:", touch);
         this.ongoingTouches[index].update(touch);
-        this.gestures.press.trigger(this.ongoingTouches[index]);
+        this.gestures.touchMove.trigger(this.ongoingTouches[index]);
         //this.ongoingTouches.splice(id, 1, touch);
       }
     }
@@ -49,8 +49,9 @@ export class Listeners {
       let index = this.getOngoingTouchId(touch.identifier);
       if (index !== null) {
         this.ongoingTouches[index].end();
-        console.log("touchend:", touch);
+        this.gestures.touchEnd.trigger(this.ongoingTouches[index]);
         this.ongoingTouches.splice(index, 1);  // remove it; we're done
+
       }
     }
   }
@@ -62,7 +63,7 @@ export class Listeners {
       let touch = touches[i];
       let index = this.getOngoingTouchId(touch.identifier);
       if (index !== null) {
-        console.log("touchcancel:", touches);
+        this.gestures.touchCancel.trigger(this.ongoingTouches[index]);
         this.ongoingTouches.splice(index, 1);  // remove it; we're done
       }
     }

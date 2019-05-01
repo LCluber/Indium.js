@@ -6,17 +6,16 @@ export class Press{
   public maxDuration: number =   0;
   public minDuration: number = 750;// should be between 125 and 500 ms
   public maxMovement: number =   0;
-  public callback: Function; 
-  
+  public callback: Function;
+
   constructor(callback: Function) {
     this.callback = callback;
   }
 
   public trigger(touchHandler :TouchHandler){
-    console.log('trigger');
     this.callback(touchHandler);
   }
-  
+
 
 
 }

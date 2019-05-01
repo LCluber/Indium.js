@@ -25,6 +25,42 @@
 
 import { Dom } from '@lcluber/weejs';
 
+class TouchStart {
+    constructor(callback) {
+        this.maxDuration = 300;
+        this.minDuration = 30;
+        this.maxMovement = 30;
+        this.callback = callback;
+    }
+    trigger(touchHandler) {
+        this.callback(touchHandler);
+    }
+}
+
+class TouchMove {
+    constructor(callback) {
+        this.maxDuration = 300;
+        this.minDuration = 30;
+        this.maxMovement = 30;
+        this.callback = callback;
+    }
+    trigger(touchHandler) {
+        this.callback(touchHandler);
+    }
+}
+
+class TouchEnd {
+    constructor(callback) {
+        this.maxDuration = 300;
+        this.minDuration = 30;
+        this.maxMovement = 30;
+        this.callback = callback;
+    }
+    trigger(touchHandler) {
+        this.callback(touchHandler);
+    }
+}
+
 class Tap {
     constructor(callback) {
         this.maxDuration = 300;
@@ -57,7 +93,6 @@ class Press {
         this.callback = callback;
     }
     trigger(touchHandler) {
-        console.log('trigger');
         this.callback(touchHandler);
     }
 }
@@ -641,6 +676,15 @@ class Zone {
     constructor() {
         this.gestures = {};
     }
+    touchStart(callback) {
+        this.gestures.touchStart = new TouchStart(callback);
+    }
+    touchMove(callback) {
+        this.gestures.touchMove = new TouchMove(callback);
+    }
+    touchEnd(callback) {
+        this.gestures.touchEnd = new TouchEnd(callback);
+    }
     tap(callback) {
         this.gestures.tap = new Tap(callback);
     }
@@ -656,7 +700,7 @@ class Zone {
 }
 
 class TouchHandler {
-    constructor(identifier, pageY, pageX) {
+    constructor(identifier, pageX, pageY) {
         this.identifier = identifier;
         this.startTime = +new Date();
         this.startPosition = new Vector2(pageX, pageY);
@@ -696,7 +740,9 @@ class Listeners {
         for (let i = 0; i < touches.length; i++) {
             let touch = touches[i];
             console.log("touchstart:", touch);
-            this.ongoingTouches.push(new TouchHandler(touch.identifier, touch.pageX, touch.pageY));
+            let touchHandler = new TouchHandler(touch.identifier, touch.pageX, touch.pageY);
+            this.ongoingTouches.push(touchHandler);
+            this.gestures.touchStart.trigger(touchHandler);
         }
     }
     handleMove(event) {
@@ -707,7 +753,7 @@ class Listeners {
             if (index !== null) {
                 console.log("touchmove:", touch);
                 this.ongoingTouches[index].update(touch);
-                this.gestures.press.trigger(this.ongoingTouches[index]);
+                this.gestures.touchMove.trigger(this.ongoingTouches[index]);
             }
         }
     }
@@ -719,6 +765,7 @@ class Listeners {
             if (index !== null) {
                 this.ongoingTouches[index].end();
                 console.log("touchend:", touch);
+                this.gestures.touchEnd.trigger(this.ongoingTouches[index]);
                 this.ongoingTouches.splice(index, 1);
             }
         }
