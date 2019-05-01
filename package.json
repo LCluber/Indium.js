@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "Touch gestures library written in TypeScript with multiple touches detection.",
   "keywords": [
-    "key binding"
+    "Touch gestures"
   ],
   "homepage": "https://github.com/LCluber/Indium.js",
   "main": "dist/indium",
