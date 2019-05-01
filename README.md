@@ -1,6 +1,6 @@
 ## Synopsis
 
-[Indium.js](http://indiumjs.lcluber.com) is a touch gestures library written in TypeScript with multiple touches detection.
+**Indium.js** is a touch gestures library written in TypeScript with multiple touches detection.
 
 ## Motivation
 

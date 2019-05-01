@@ -395,7 +395,7 @@ module.exports = function(grunt){
       options: {
         logConcurrentOutput: true
       },
-      tasks: [ 'nodemon', 'watch', 'open' ]
+      tasks: [ /*'nodemon',*/ 'watch'/*, 'open'*/ ]
     }
   });
 
@@ -488,7 +488,7 @@ module.exports = function(grunt){
                         //build lib
                         grunt.task.run('lib');
                         //build site
-                        grunt.task.run('website');
+                        //grunt.task.run('website');
                         //build documentation
                         //grunt.task.run('doc');
                         // launch server and watch for changes
