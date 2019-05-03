@@ -33,7 +33,7 @@ See a basic example **[here](http://vortalcombat.roostrjs.com)**.
 ```
 
 ```javascript
-import { Screen } from '@lcluber/indiumjs';
+import { TouchScreen } from '@lcluber/indiumjs';
 
 function shipMove(touch) {
   console.log('touch',touch);
@@ -43,7 +43,7 @@ function shipStop(touch) {
   console.log('end',touch);
 }
 
-var touchScreen = new Screen('myCanvas');
+var touchScreen = new TouchScreen('myCanvas');
 touchScreen.touchStart(shipMove);
 touchScreen.touchMove(shipMove);
 touchScreen.touchEnd(shipStop);
@@ -68,11 +68,17 @@ function shipStop(touch) {
   console.log('end',touch);
 }
 
-var touchScreen = new Indium.Screen('myCanvas');
+var touchScreen = new Indium.TouchScreen('myCanvas');
+
 touchScreen.touchStart(shipMove);
 touchScreen.touchMove(shipMove);
 touchScreen.touchEnd(shipStop);
 touchScreen.touchCancel(shipStop);
+
+var bottom = new Indium.Zones.bottom();
+bottom.touchStart(shipShoot);
+touchScreen.Zones.add(bottom);
+
 ```
 
 ## API Reference

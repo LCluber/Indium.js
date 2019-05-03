@@ -1,13 +1,15 @@
-import { TouchHandler } from './touchhandler';
-import { THTMLElements } from './types';
-import { IGestures }  from './interfaces';
-import { Logger } from '@lcluber/mouettejs';
+import { Zone }           from './zones/zone';
+import { TouchHandler }   from './touchhandler';
+import { THTMLElements }  from './types';
+import { IGestures }      from './interfaces';
+import { Logger }         from '@lcluber/mouettejs';
 
 
 export class Listeners {
 
   gestures: IGestures;
   ongoingTouches: TouchHandler[];
+  zones: Zone[];
 
   constructor(htmlElement: THTMLElements, gestures: IGestures) {
     this.gestures = gestures;
@@ -16,6 +18,7 @@ export class Listeners {
     htmlElement.addEventListener("touchcancel", this.handleCancel.bind( this ),  false);
     htmlElement.addEventListener("touchmove",   this.handleMove.bind( this ),    false);
     this.ongoingTouches = [];
+    this.zones = [];
   }
 
   public handleStart(event: TouchEvent): void {
