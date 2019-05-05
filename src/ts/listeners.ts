@@ -46,7 +46,6 @@ export class Listeners {
         let ongoingTouch = this.ongoingTouches[index];
         ongoingTouch.update(touch);
         if(!this.checkZones(ongoingTouch, 'touchMove')) {
-          console.log('zone not found', this.zones);
           this.gestures.touchMove.trigger(ongoingTouch);
         }
       }
@@ -88,8 +87,7 @@ export class Listeners {
 
   private checkZones(ongoingTouch: TouchHandler, gesture: TGesture): boolean {
     for (let zone of this.zones) {
-      if(zone.contains(ongoingTouch.lastPosition)){
-        zone.gestures[gesture].trigger(ongoingTouch);
+      if(zone.contains(ongoingTouch.lastPosition) && zone.gestures[gesture].trigger(ongoingTouch)) {
         return true;
       }
     }

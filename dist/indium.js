@@ -35,7 +35,9 @@ class Gesture {
     trigger(touchHandler) {
         if (this.callback) {
             this.callback(touchHandler);
+            return true;
         }
+        return false;
     }
 }
 
@@ -911,7 +913,6 @@ class Listeners {
                 let ongoingTouch = this.ongoingTouches[index];
                 ongoingTouch.update(touch);
                 if (!this.checkZones(ongoingTouch, 'touchMove')) {
-                    console.log('zone not found', this.zones);
                     this.gestures.touchMove.trigger(ongoingTouch);
                 }
             }
@@ -949,8 +950,7 @@ class Listeners {
     }
     checkZones(ongoingTouch, gesture) {
         for (let zone of this.zones) {
-            if (zone.contains(ongoingTouch.lastPosition)) {
-                zone.gestures[gesture].trigger(ongoingTouch);
+            if (zone.contains(ongoingTouch.lastPosition) && zone.gestures[gesture].trigger(ongoingTouch)) {
                 return true;
             }
         }

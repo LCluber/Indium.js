@@ -36,7 +36,9 @@ var Indium = (function (exports) {
         Gesture.prototype.trigger = function (touchHandler) {
             if (this.callback) {
                 this.callback(touchHandler);
+                return true;
             }
+            return false;
         };
         return Gesture;
     }();
@@ -1939,7 +1941,6 @@ var Indium = (function (exports) {
                     var ongoingTouch = this.ongoingTouches[index];
                     ongoingTouch.update(touch);
                     if (!this.checkZones(ongoingTouch, 'touchMove')) {
-                        console.log('zone not found', this.zones);
                         this.gestures.touchMove.trigger(ongoingTouch);
                     }
                 }
@@ -1978,8 +1979,7 @@ var Indium = (function (exports) {
         Listeners.prototype.checkZones = function (ongoingTouch, gesture) {
             for (var _i = 0, _a = this.zones; _i < _a.length; _i++) {
                 var zone = _a[_i];
-                if (zone.contains(ongoingTouch.lastPosition)) {
-                    zone.gestures[gesture].trigger(ongoingTouch);
+                if (zone.contains(ongoingTouch.lastPosition) && zone.gestures[gesture].trigger(ongoingTouch)) {
                     return true;
                 }
             }

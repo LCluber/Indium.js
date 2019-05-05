@@ -17,10 +17,12 @@ export abstract class Gesture implements IGesture {
     this.callback = callback;
   }
 
-  public trigger(touchHandler: TouchHandler): void {
+  public trigger(touchHandler: TouchHandler): boolean {
     if (this.callback) {
       this.callback(touchHandler);
+      return true;
     }
+    return false;
   }
 
 }
