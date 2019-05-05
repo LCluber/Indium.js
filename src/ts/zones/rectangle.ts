@@ -1,7 +1,8 @@
 import { Zone } from './zone';
+import { IZone }  from '../interfaces';
 import { Rectangle as T6Rectangle, Vector2 } from '@lcluber/type6js';
 
-export class Rectangle extends Zone {
+export class Rectangle extends Zone implements IZone {
 
   private rectangle: T6Rectangle ;
 
@@ -10,11 +11,8 @@ export class Rectangle extends Zone {
     this.rectangle = new T6Rectangle( positionX, positionY, sizeX, sizeY );
   }
 
-  private contains(touchPosition: Vector2): boolean {
-    // if (this.rectangle.contains(touchPosition)) {
-    //   return true;
-    // }
-    return false;
+  public contains(touchPosition: Vector2): boolean {
+    return this.rectangle.isInside(touchPosition);
   }
 
 }

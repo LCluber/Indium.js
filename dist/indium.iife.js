@@ -26,96 +26,223 @@
 var Indium = (function (exports) {
     'use strict';
 
-    var TouchStart = function () {
-        function TouchStart(callback) {
-            this.maxDuration = 300;
-            this.minDuration = 30;
-            this.maxMovement = 30;
-            this.callback = callback;
+    var Gesture = function () {
+        function Gesture() {
+            this.callback = null;
         }
-        TouchStart.prototype.trigger = function (touchHandler) {
-            this.callback(touchHandler);
+        Gesture.prototype.activate = function (callback) {
+            this.callback = callback;
         };
+        Gesture.prototype.trigger = function (touchHandler) {
+            if (this.callback) {
+                this.callback(touchHandler);
+                return true;
+            }
+            return false;
+        };
+        return Gesture;
+    }();
+
+    var __extends = undefined && undefined.__extends || function () {
+        var _extendStatics = function extendStatics(d, b) {
+            _extendStatics = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function (d, b) {
+                d.__proto__ = b;
+            } || function (d, b) {
+                for (var p in b) {
+                    if (b.hasOwnProperty(p)) d[p] = b[p];
+                }
+            };
+            return _extendStatics(d, b);
+        };
+        return function (d, b) {
+            _extendStatics(d, b);
+            function __() {
+                this.constructor = d;
+            }
+            d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+        };
+    }();
+    var TouchStart = function (_super) {
+        __extends(TouchStart, _super);
+        function TouchStart() {
+            return _super.call(this) || this;
+        }
         return TouchStart;
-    }();
+    }(Gesture);
 
-    var TouchMove = function () {
-        function TouchMove(callback) {
-            this.maxDuration = 300;
-            this.minDuration = 30;
-            this.maxMovement = 30;
-            this.callback = callback;
-        }
-        TouchMove.prototype.trigger = function (touchHandler) {
-            this.callback(touchHandler);
+    var __extends$1 = undefined && undefined.__extends || function () {
+        var _extendStatics = function extendStatics(d, b) {
+            _extendStatics = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function (d, b) {
+                d.__proto__ = b;
+            } || function (d, b) {
+                for (var p in b) {
+                    if (b.hasOwnProperty(p)) d[p] = b[p];
+                }
+            };
+            return _extendStatics(d, b);
         };
+        return function (d, b) {
+            _extendStatics(d, b);
+            function __() {
+                this.constructor = d;
+            }
+            d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+        };
+    }();
+    var TouchMove = function (_super) {
+        __extends$1(TouchMove, _super);
+        function TouchMove() {
+            return _super.call(this) || this;
+        }
         return TouchMove;
-    }();
+    }(Gesture);
 
-    var TouchEnd = function () {
-        function TouchEnd(callback) {
-            this.maxDuration = 300;
-            this.minDuration = 30;
-            this.maxMovement = 30;
-            this.callback = callback;
-        }
-        TouchEnd.prototype.trigger = function (touchHandler) {
-            this.callback(touchHandler);
+    var __extends$2 = undefined && undefined.__extends || function () {
+        var _extendStatics = function extendStatics(d, b) {
+            _extendStatics = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function (d, b) {
+                d.__proto__ = b;
+            } || function (d, b) {
+                for (var p in b) {
+                    if (b.hasOwnProperty(p)) d[p] = b[p];
+                }
+            };
+            return _extendStatics(d, b);
         };
+        return function (d, b) {
+            _extendStatics(d, b);
+            function __() {
+                this.constructor = d;
+            }
+            d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+        };
+    }();
+    var TouchEnd = function (_super) {
+        __extends$2(TouchEnd, _super);
+        function TouchEnd() {
+            return _super.call(this) || this;
+        }
         return TouchEnd;
-    }();
+    }(Gesture);
 
-    var TouchCancel = function () {
-        function TouchCancel(callback) {
-            this.maxDuration = 300;
-            this.minDuration = 30;
-            this.maxMovement = 30;
-            this.callback = callback;
-        }
-        TouchCancel.prototype.trigger = function (touchHandler) {
-            this.callback(touchHandler);
+    var __extends$3 = undefined && undefined.__extends || function () {
+        var _extendStatics = function extendStatics(d, b) {
+            _extendStatics = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function (d, b) {
+                d.__proto__ = b;
+            } || function (d, b) {
+                for (var p in b) {
+                    if (b.hasOwnProperty(p)) d[p] = b[p];
+                }
+            };
+            return _extendStatics(d, b);
         };
+        return function (d, b) {
+            _extendStatics(d, b);
+            function __() {
+                this.constructor = d;
+            }
+            d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+        };
+    }();
+    var TouchCancel = function (_super) {
+        __extends$3(TouchCancel, _super);
+        function TouchCancel() {
+            return _super.call(this) || this;
+        }
         return TouchCancel;
-    }();
+    }(Gesture);
 
-    var Tap = function () {
-        function Tap(callback) {
-            this.maxDuration = 300;
-            this.minDuration = 30;
-            this.maxMovement = 30;
-            this.callback = callback;
-        }
-        Tap.prototype.trigger = function (touchHandler) {
-            this.callback(touchHandler);
+    var __extends$4 = undefined && undefined.__extends || function () {
+        var _extendStatics = function extendStatics(d, b) {
+            _extendStatics = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function (d, b) {
+                d.__proto__ = b;
+            } || function (d, b) {
+                for (var p in b) {
+                    if (b.hasOwnProperty(p)) d[p] = b[p];
+                }
+            };
+            return _extendStatics(d, b);
         };
+        return function (d, b) {
+            _extendStatics(d, b);
+            function __() {
+                this.constructor = d;
+            }
+            d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+        };
+    }();
+    var Tap = function (_super) {
+        __extends$4(Tap, _super);
+        function Tap() {
+            var _this = _super.call(this) || this;
+            _this.maxDuration = 300;
+            _this.minDuration = 30;
+            _this.maxMovement = 30;
+            return _this;
+        }
         return Tap;
-    }();
+    }(Gesture);
 
-    var DoubleTap = function () {
-        function DoubleTap(callback) {
-            this.maxDuration = 750;
-            this.minDuration = 100;
-            this.maxMovement = 30;
-            this.callback = callback;
-        }
-        DoubleTap.prototype.trigger = function (touchHandler) {
-            this.callback(touchHandler);
+    var __extends$5 = undefined && undefined.__extends || function () {
+        var _extendStatics = function extendStatics(d, b) {
+            _extendStatics = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function (d, b) {
+                d.__proto__ = b;
+            } || function (d, b) {
+                for (var p in b) {
+                    if (b.hasOwnProperty(p)) d[p] = b[p];
+                }
+            };
+            return _extendStatics(d, b);
         };
+        return function (d, b) {
+            _extendStatics(d, b);
+            function __() {
+                this.constructor = d;
+            }
+            d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+        };
+    }();
+    var DoubleTap = function (_super) {
+        __extends$5(DoubleTap, _super);
+        function DoubleTap() {
+            var _this = _super.call(this) || this;
+            _this.maxDuration = 750;
+            _this.minDuration = 100;
+            _this.maxMovement = 30;
+            return _this;
+        }
         return DoubleTap;
-    }();
+    }(Gesture);
 
-    var Press = function () {
-        function Press(callback) {
-            this.maxDuration = 0;
-            this.minDuration = 750;
-            this.maxMovement = 0;
-            this.callback = callback;
-        }
-        Press.prototype.trigger = function (touchHandler) {
-            this.callback(touchHandler);
+    var __extends$6 = undefined && undefined.__extends || function () {
+        var _extendStatics = function extendStatics(d, b) {
+            _extendStatics = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function (d, b) {
+                d.__proto__ = b;
+            } || function (d, b) {
+                for (var p in b) {
+                    if (b.hasOwnProperty(p)) d[p] = b[p];
+                }
+            };
+            return _extendStatics(d, b);
         };
-        return Press;
+        return function (d, b) {
+            _extendStatics(d, b);
+            function __() {
+                this.constructor = d;
+            }
+            d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+        };
     }();
+    var Press = function (_super) {
+        __extends$6(Press, _super);
+        function Press() {
+            var _this = _super.call(this) || this;
+            _this.maxDuration = 0;
+            _this.minDuration = 750;
+            _this.maxMovement = 0;
+            return _this;
+        }
+        return Press;
+    }(Gesture);
 
     var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -243,6 +370,11 @@ var Indium = (function (exports) {
             key: 'isNegative',
             value: function isNegative(x) {
                 return x < 0 ? true : false;
+            }
+        }, {
+            key: 'isBetween',
+            value: function isBetween(x, min, max) {
+                return x >= min && x <= max;
             }
         }, {
             key: 'validate',
@@ -956,6 +1088,11 @@ var Indium = (function (exports) {
                 this.radius *= scalar;
             }
         }, {
+            key: 'isInside',
+            value: function isInside(vector) {
+                return vector.getSquaredDistance(this.position) <= this.radius * this.radius;
+            }
+        }, {
             key: 'draw',
             value: function draw(context, fillColor, strokeColor, strokeWidth) {
                 context.beginPath();
@@ -1095,6 +1232,11 @@ var Indium = (function (exports) {
             value: function setHalfSize() {
                 this.halfSize.copy(this.size);
                 this.halfSize.halve();
+            }
+        }, {
+            key: 'isInside',
+            value: function isInside(vector) {
+                return Utils.isBetween(vector.x, this.topLeftCorner.x, this.bottomRightCorner.x) && Utils.isBetween(vector.y, this.topLeftCorner.y, this.bottomRightCorner.y);
             }
         }, {
             key: 'draw',
@@ -1664,51 +1806,79 @@ var Indium = (function (exports) {
         return Matrix4x4;
     }();
 
-    var Swipe = function () {
-        function Swipe(callback) {
-            this.maxDuration = 750;
-            this.minDuration = 30;
-            this.maxMovement = 0;
-            this.absoluteDirection = new Vector2();
-            this.callback = callback;
-        }
-        Swipe.prototype.trigger = function (touchHandler) {
-            this.callback(touchHandler);
+    var __extends$7 = undefined && undefined.__extends || function () {
+        var _extendStatics = function extendStatics(d, b) {
+            _extendStatics = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function (d, b) {
+                d.__proto__ = b;
+            } || function (d, b) {
+                for (var p in b) {
+                    if (b.hasOwnProperty(p)) d[p] = b[p];
+                }
+            };
+            return _extendStatics(d, b);
         };
+        return function (d, b) {
+            _extendStatics(d, b);
+            function __() {
+                this.constructor = d;
+            }
+            d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+        };
+    }();
+    var Swipe = function (_super) {
+        __extends$7(Swipe, _super);
+        function Swipe() {
+            var _this = _super.call(this) || this;
+            _this.maxDuration = 750;
+            _this.minDuration = 30;
+            _this.maxMovement = 0;
+            _this.absoluteDirection = new Vector2();
+            return _this;
+        }
         Swipe.prototype.getDirection = function (direction) {
             this.absoluteDirection.absoluteVector(direction);
             return this.absoluteDirection.x >= this.absoluteDirection.y ? this.absoluteDirection.x > 0 ? 'Left' : 'Right' : this.absoluteDirection.y > 0 ? 'Up' : 'Down';
         };
         return Swipe;
-    }();
+    }(Gesture);
 
     var Zone = function () {
         function Zone() {
-            this.gestures = {};
+            this.htmlElement = null;
+            this.gestures = {
+                touchStart: new TouchStart(),
+                touchMove: new TouchMove(),
+                touchEnd: new TouchEnd(),
+                touchCancel: new TouchCancel(),
+                tap: new Tap(),
+                doubleTap: new DoubleTap(),
+                press: new Press(),
+                swipe: new Swipe()
+            };
         }
         Zone.prototype.touchStart = function (callback) {
-            this.gestures.touchStart = new TouchStart(callback);
+            this.gestures.touchStart.activate(callback);
         };
         Zone.prototype.touchMove = function (callback) {
-            this.gestures.touchMove = new TouchMove(callback);
+            this.gestures.touchMove.activate(callback);
         };
         Zone.prototype.touchEnd = function (callback) {
-            this.gestures.touchEnd = new TouchEnd(callback);
+            this.gestures.touchEnd.activate(callback);
         };
         Zone.prototype.touchCancel = function (callback) {
-            this.gestures.touchCancel = new TouchCancel(callback);
+            this.gestures.touchCancel.activate(callback);
         };
         Zone.prototype.tap = function (callback) {
-            this.gestures.tap = new Tap(callback);
+            this.gestures.tap.activate(callback);
         };
         Zone.prototype.doubleTap = function (callback) {
-            this.gestures.doubleTap = new DoubleTap(callback);
+            this.gestures.doubleTap.activate(callback);
         };
         Zone.prototype.press = function (callback) {
-            this.gestures.press = new Press(callback);
+            this.gestures.press.activate(callback);
         };
         Zone.prototype.swipe = function (callback) {
-            this.gestures.swipe = new Swipe(callback);
+            this.gestures.swipe.activate(callback);
         };
         return Zone;
     }();
@@ -1744,11 +1914,12 @@ var Indium = (function (exports) {
     var Listeners = function () {
         function Listeners(htmlElement, gestures) {
             this.gestures = gestures;
-            htmlElement.addEventListener("touchstart", this.handleStart.bind(this), false);
-            htmlElement.addEventListener("touchend", this.handleEnd.bind(this), false);
-            htmlElement.addEventListener("touchcancel", this.handleCancel.bind(this), false);
-            htmlElement.addEventListener("touchmove", this.handleMove.bind(this), false);
+            htmlElement.addEventListener('touchstart', this.handleStart.bind(this), false);
+            htmlElement.addEventListener('touchmove', this.handleMove.bind(this), false);
+            htmlElement.addEventListener('touchend', this.handleEnd.bind(this), false);
+            htmlElement.addEventListener('touchcancel', this.handleCancel.bind(this), false);
             this.ongoingTouches = [];
+            this.zones = [];
         }
         Listeners.prototype.handleStart = function (event) {
             var touches = event.changedTouches;
@@ -1756,7 +1927,9 @@ var Indium = (function (exports) {
                 var touch = touches[i];
                 var touchHandler = new TouchHandler(touch.identifier, touch.pageX, touch.pageY);
                 this.ongoingTouches.push(touchHandler);
-                this.gestures.touchStart.trigger(touchHandler);
+                if (!this.checkZones(touchHandler, 'touchStart')) {
+                    this.gestures.touchStart.trigger(touchHandler);
+                }
             }
         };
         Listeners.prototype.handleMove = function (event) {
@@ -1765,8 +1938,11 @@ var Indium = (function (exports) {
                 var touch = touches[i];
                 var index = this.getOngoingTouchId(touch.identifier);
                 if (index !== null) {
-                    this.ongoingTouches[index].update(touch);
-                    this.gestures.touchMove.trigger(this.ongoingTouches[index]);
+                    var ongoingTouch = this.ongoingTouches[index];
+                    ongoingTouch.update(touch);
+                    if (!this.checkZones(ongoingTouch, 'touchMove')) {
+                        this.gestures.touchMove.trigger(ongoingTouch);
+                    }
                 }
             }
         };
@@ -1776,9 +1952,12 @@ var Indium = (function (exports) {
                 var touch = touches[i];
                 var index = this.getOngoingTouchId(touch.identifier);
                 if (index !== null) {
-                    this.ongoingTouches[index].end();
-                    this.gestures.touchEnd.trigger(this.ongoingTouches[index]);
+                    var ongoingTouch = this.ongoingTouches[index];
+                    ongoingTouch.end();
                     this.ongoingTouches.splice(index, 1);
+                    if (!this.checkZones(ongoingTouch, 'touchEnd')) {
+                        this.gestures.touchEnd.trigger(ongoingTouch);
+                    }
                 }
             }
         };
@@ -1789,10 +1968,22 @@ var Indium = (function (exports) {
                 var touch = touches[i];
                 var index = this.getOngoingTouchId(touch.identifier);
                 if (index !== null) {
-                    this.gestures.touchCancel.trigger(this.ongoingTouches[index]);
+                    var ongoingTouch = this.ongoingTouches[index];
                     this.ongoingTouches.splice(index, 1);
+                    if (!this.checkZones(ongoingTouch, 'touchCancel')) {
+                        this.gestures.touchCancel.trigger(ongoingTouch);
+                    }
                 }
             }
+        };
+        Listeners.prototype.checkZones = function (ongoingTouch, gesture) {
+            for (var _i = 0, _a = this.zones; _i < _a.length; _i++) {
+                var zone = _a[_i];
+                if (zone.contains(ongoingTouch.lastPosition) && zone.gestures[gesture].trigger(ongoingTouch)) {
+                    return true;
+                }
+            }
+            return false;
         };
         Listeners.prototype.getOngoingTouchId = function (id) {
             for (var i = 0; i < this.ongoingTouches.length; i++) {
@@ -2166,7 +2357,7 @@ var Indium = (function (exports) {
         return Sound;
     }();
 
-    var __extends = undefined && undefined.__extends || function () {
+    var __extends$8 = undefined && undefined.__extends || function () {
         var _extendStatics = function extendStatics(d, b) {
             _extendStatics = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function (d, b) {
                 d.__proto__ = b;
@@ -2185,18 +2376,391 @@ var Indium = (function (exports) {
             d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
         };
     }();
-    var Screen = function (_super) {
-        __extends(Screen, _super);
-        function Screen(htmlElementId) {
+    var TouchScreen = function (_super) {
+        __extends$8(TouchScreen, _super);
+        function TouchScreen(htmlElementId) {
             var _this = _super.call(this) || this;
             _this.htmlElement = Dom.findById(htmlElementId);
-            _this.listeners = new Listeners(_this.htmlElement, _this.gestures);
+            if (_this.htmlElement) {
+                _this.listeners = new Listeners(_this.htmlElement, _this.gestures);
+            }
             return _this;
         }
-        return Screen;
+        TouchScreen.prototype.addZone = function (zone) {
+            if (this.htmlElement) {
+                zone.htmlElement = this.htmlElement;
+                this.listeners.zones.push(zone);
+            }
+        };
+        TouchScreen.prototype.contains = function () {
+            return true;
+        };
+        return TouchScreen;
     }(Zone);
 
-    exports.Screen = Screen;
+    var __extends$9 = undefined && undefined.__extends || function () {
+        var _extendStatics = function extendStatics(d, b) {
+            _extendStatics = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function (d, b) {
+                d.__proto__ = b;
+            } || function (d, b) {
+                for (var p in b) {
+                    if (b.hasOwnProperty(p)) d[p] = b[p];
+                }
+            };
+            return _extendStatics(d, b);
+        };
+        return function (d, b) {
+            _extendStatics(d, b);
+            function __() {
+                this.constructor = d;
+            }
+            d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+        };
+    }();
+    var Circle$1 = function (_super) {
+        __extends$9(Circle$$1, _super);
+        function Circle$$1(positionX, positionY, radius) {
+            var _this = _super.call(this) || this;
+            _this.circle = new Circle(positionX, positionY, radius);
+            return _this;
+        }
+        Circle$$1.prototype.contains = function (touchPosition) {
+            return this.circle.isInside(touchPosition);
+        };
+        return Circle$$1;
+    }(Zone);
+
+    var __extends$10 = undefined && undefined.__extends || function () {
+        var _extendStatics = function extendStatics(d, b) {
+            _extendStatics = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function (d, b) {
+                d.__proto__ = b;
+            } || function (d, b) {
+                for (var p in b) {
+                    if (b.hasOwnProperty(p)) d[p] = b[p];
+                }
+            };
+            return _extendStatics(d, b);
+        };
+        return function (d, b) {
+            _extendStatics(d, b);
+            function __() {
+                this.constructor = d;
+            }
+            d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+        };
+    }();
+    var Rectangle$1 = function (_super) {
+        __extends$10(Rectangle$$1, _super);
+        function Rectangle$$1(positionX, positionY, sizeX, sizeY) {
+            var _this = _super.call(this) || this;
+            _this.rectangle = new Rectangle(positionX, positionY, sizeX, sizeY);
+            return _this;
+        }
+        Rectangle$$1.prototype.contains = function (touchPosition) {
+            return this.rectangle.isInside(touchPosition);
+        };
+        return Rectangle$$1;
+    }(Zone);
+
+    var __extends$11 = undefined && undefined.__extends || function () {
+        var _extendStatics = function extendStatics(d, b) {
+            _extendStatics = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function (d, b) {
+                d.__proto__ = b;
+            } || function (d, b) {
+                for (var p in b) {
+                    if (b.hasOwnProperty(p)) d[p] = b[p];
+                }
+            };
+            return _extendStatics(d, b);
+        };
+        return function (d, b) {
+            _extendStatics(d, b);
+            function __() {
+                this.constructor = d;
+            }
+            d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+        };
+    }();
+    var Top = function (_super) {
+        __extends$11(Top, _super);
+        function Top(limit) {
+            var _this = _super.call(this) || this;
+            _this.limit = limit;
+            return _this;
+        }
+        Top.prototype.contains = function (touchPosition) {
+            var elementHeight = this.htmlElement.offsetHeight;
+            var limit = this.limit * elementHeight;
+            if (touchPosition.y <= limit) {
+                return true;
+            }
+            return false;
+        };
+        return Top;
+    }(Zone);
+
+    var __extends$12 = undefined && undefined.__extends || function () {
+        var _extendStatics = function extendStatics(d, b) {
+            _extendStatics = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function (d, b) {
+                d.__proto__ = b;
+            } || function (d, b) {
+                for (var p in b) {
+                    if (b.hasOwnProperty(p)) d[p] = b[p];
+                }
+            };
+            return _extendStatics(d, b);
+        };
+        return function (d, b) {
+            _extendStatics(d, b);
+            function __() {
+                this.constructor = d;
+            }
+            d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+        };
+    }();
+    var Right = function (_super) {
+        __extends$12(Right, _super);
+        function Right(limit) {
+            var _this = _super.call(this) || this;
+            _this.limit = limit;
+            return _this;
+        }
+        Right.prototype.contains = function (touchPosition) {
+            var elementWidth = this.htmlElement.offsetWidth;
+            var limit = elementWidth - this.limit * elementWidth;
+            if (touchPosition.x >= limit) {
+                return true;
+            }
+            return false;
+        };
+        return Right;
+    }(Zone);
+
+    var __extends$13 = undefined && undefined.__extends || function () {
+        var _extendStatics = function extendStatics(d, b) {
+            _extendStatics = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function (d, b) {
+                d.__proto__ = b;
+            } || function (d, b) {
+                for (var p in b) {
+                    if (b.hasOwnProperty(p)) d[p] = b[p];
+                }
+            };
+            return _extendStatics(d, b);
+        };
+        return function (d, b) {
+            _extendStatics(d, b);
+            function __() {
+                this.constructor = d;
+            }
+            d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+        };
+    }();
+    var Bottom = function (_super) {
+        __extends$13(Bottom, _super);
+        function Bottom(limit) {
+            var _this = _super.call(this) || this;
+            _this.limit = limit;
+            return _this;
+        }
+        Bottom.prototype.contains = function (touchPosition) {
+            var elementHeight = this.htmlElement.offsetHeight;
+            var limit = elementHeight - this.limit * elementHeight;
+            if (touchPosition.y >= limit) {
+                return true;
+            }
+            return false;
+        };
+        return Bottom;
+    }(Zone);
+
+    var __extends$14 = undefined && undefined.__extends || function () {
+        var _extendStatics = function extendStatics(d, b) {
+            _extendStatics = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function (d, b) {
+                d.__proto__ = b;
+            } || function (d, b) {
+                for (var p in b) {
+                    if (b.hasOwnProperty(p)) d[p] = b[p];
+                }
+            };
+            return _extendStatics(d, b);
+        };
+        return function (d, b) {
+            _extendStatics(d, b);
+            function __() {
+                this.constructor = d;
+            }
+            d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+        };
+    }();
+    var Left = function (_super) {
+        __extends$14(Left, _super);
+        function Left(limit) {
+            var _this = _super.call(this) || this;
+            _this.limit = limit;
+            return _this;
+        }
+        Left.prototype.contains = function (touchPosition) {
+            var elementWidth = this.htmlElement.offsetWidth;
+            var limit = this.limit * elementWidth;
+            if (touchPosition.x <= limit) {
+                return true;
+            }
+            return false;
+        };
+        return Left;
+    }(Zone);
+
+    var __extends$15 = undefined && undefined.__extends || function () {
+        var _extendStatics = function extendStatics(d, b) {
+            _extendStatics = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function (d, b) {
+                d.__proto__ = b;
+            } || function (d, b) {
+                for (var p in b) {
+                    if (b.hasOwnProperty(p)) d[p] = b[p];
+                }
+            };
+            return _extendStatics(d, b);
+        };
+        return function (d, b) {
+            _extendStatics(d, b);
+            function __() {
+                this.constructor = d;
+            }
+            d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+        };
+    }();
+    var TopLeft = function (_super) {
+        __extends$15(TopLeft, _super);
+        function TopLeft(limit) {
+            var _this = _super.call(this) || this;
+            _this.limit = limit;
+            return _this;
+        }
+        TopLeft.prototype.contains = function (touchPosition) {
+            if (touchPosition.y < this.limit) {
+                return true;
+            }
+            return false;
+        };
+        return TopLeft;
+    }(Zone);
+
+    var __extends$16 = undefined && undefined.__extends || function () {
+        var _extendStatics = function extendStatics(d, b) {
+            _extendStatics = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function (d, b) {
+                d.__proto__ = b;
+            } || function (d, b) {
+                for (var p in b) {
+                    if (b.hasOwnProperty(p)) d[p] = b[p];
+                }
+            };
+            return _extendStatics(d, b);
+        };
+        return function (d, b) {
+            _extendStatics(d, b);
+            function __() {
+                this.constructor = d;
+            }
+            d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+        };
+    }();
+    var TopRight = function (_super) {
+        __extends$16(TopRight, _super);
+        function TopRight(limit) {
+            var _this = _super.call(this) || this;
+            _this.limit = limit;
+            return _this;
+        }
+        TopRight.prototype.contains = function (touchPosition) {
+            if (touchPosition.y < this.limit) {
+                return true;
+            }
+            return false;
+        };
+        return TopRight;
+    }(Zone);
+
+    var __extends$17 = undefined && undefined.__extends || function () {
+        var _extendStatics = function extendStatics(d, b) {
+            _extendStatics = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function (d, b) {
+                d.__proto__ = b;
+            } || function (d, b) {
+                for (var p in b) {
+                    if (b.hasOwnProperty(p)) d[p] = b[p];
+                }
+            };
+            return _extendStatics(d, b);
+        };
+        return function (d, b) {
+            _extendStatics(d, b);
+            function __() {
+                this.constructor = d;
+            }
+            d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+        };
+    }();
+    var BottomLeft = function (_super) {
+        __extends$17(BottomLeft, _super);
+        function BottomLeft(limit) {
+            var _this = _super.call(this) || this;
+            _this.limit = limit;
+            return _this;
+        }
+        BottomLeft.prototype.contains = function (touchPosition) {
+            if (touchPosition.y < this.limit) {
+                return true;
+            }
+            return false;
+        };
+        return BottomLeft;
+    }(Zone);
+
+    var __extends$18 = undefined && undefined.__extends || function () {
+        var _extendStatics = function extendStatics(d, b) {
+            _extendStatics = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function (d, b) {
+                d.__proto__ = b;
+            } || function (d, b) {
+                for (var p in b) {
+                    if (b.hasOwnProperty(p)) d[p] = b[p];
+                }
+            };
+            return _extendStatics(d, b);
+        };
+        return function (d, b) {
+            _extendStatics(d, b);
+            function __() {
+                this.constructor = d;
+            }
+            d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+        };
+    }();
+    var BottomRight = function (_super) {
+        __extends$18(BottomRight, _super);
+        function BottomRight(limit) {
+            var _this = _super.call(this) || this;
+            _this.limit = limit;
+            return _this;
+        }
+        BottomRight.prototype.contains = function (touchPosition) {
+            if (touchPosition.y < this.limit) {
+                return true;
+            }
+            return false;
+        };
+        return BottomRight;
+    }(Zone);
+
+    exports.TouchScreen = TouchScreen;
+    exports.Circle = Circle$1;
+    exports.Rectangle = Rectangle$1;
+    exports.Top = Top;
+    exports.Right = Right;
+    exports.Bottom = Bottom;
+    exports.Left = Left;
+    exports.TopLeft = TopLeft;
+    exports.TopRight = TopRight;
+    exports.BottomLeft = BottomLeft;
+    exports.BottomRight = BottomRight;
 
     return exports;
 

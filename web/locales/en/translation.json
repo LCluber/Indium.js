@@ -1,0 +1,41 @@
+{
+  "title": "Indium.js",
+  "menu" : {
+    "menu"          : "Menu",
+    "home"          : "Home",
+    "about"         : "About",
+    "example"       : "Example",
+    "code"          : "Code",
+    "download"      : "Download",
+    "documentation" : "Documentation",
+    "contact"       : "Contact"
+  },
+  "section" : {
+    "home" : {
+      "h1" : "Indium.js",
+      "description" : ""
+    },
+    "about" : {
+      "h2" : "About",
+      "text" : "<p></p>"
+    },
+    "code" : {
+      "h2" : "Code",
+      "h3" : "Javascript (main.js)",
+      "p1" : ""
+    },
+    "download" : {
+      "h2" : "Download Indium.js",
+      "min" : "Standalone IIFE",
+      "npm" : "Install with ",
+      "github" : "Clone from Github "
+    },
+    "contact" : {
+      "h2" : "Contact me",
+      "description" : "Feel free to ask me about my work, give me suggestions, or just to say hi.",
+      "website" : "lcluber.com"
+    }
+  },
+  "github":" Github",
+  "twitter":"Twitter"
+}
