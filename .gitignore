@@ -1,7 +1,8 @@
 
 node_modules/
-web/
 build/
+web/sass/build/
+web/js/build/
 .sass-cache/
 .tscache/
 npm-debug.log

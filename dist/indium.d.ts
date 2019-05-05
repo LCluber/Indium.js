@@ -23,11 +23,22 @@
 * http://indiumjs.lcluber.com
 */
 
+
+
+
+
+
+
+
+
+
+
+
 export interface IGesture {
     maxDuration: number;
     minDuration: number;
     maxMovement: number;
-    callback: Function;
+    activate: Function;
     trigger: Function;
 }
 export interface IGestures {
@@ -39,6 +50,12 @@ export interface IGestures {
     doubleTap: IGesture;
     press: IGesture;
     swipe: IGesture;
+    [key: string]: IGesture;
+}
+export interface IZone {
+    htmlElement: THTMLElements;
+    gestures: IGestures;
+    contains: Function;
 }
 
 
@@ -46,11 +63,13 @@ export interface IGestures {
 export declare class Listeners {
     gestures: IGestures;
     ongoingTouches: TouchHandler[];
+    zones: TZone[];
     constructor(htmlElement: THTMLElements, gestures: IGestures);
     handleStart(event: TouchEvent): void;
     handleMove(event: TouchEvent): void;
     handleEnd(event: TouchEvent): void;
     handleCancel(event: TouchEvent): void;
+    private checkZones;
     private getOngoingTouchId;
 }
 
@@ -69,4 +88,25 @@ export declare class TouchHandler {
     private setDistance;
     end(): void;
 }
-export declare type THTMLElements = HTMLElement | HTMLCanvasElement;
+
+
+
+export declare class TouchScreen extends Zone {
+    listeners: Listeners;
+    constructor(htmlElementId: string);
+    addZone(zone: TZone): void;
+    contains(): boolean;
+}
+
+
+
+
+
+
+
+
+
+
+export declare type THTMLElements = HTMLElement | HTMLCanvasElement | null;
+export declare type TZone = Circle | Rectangle | Top | Right | Bottom | Left | TopLeft | TopRight | BottomLeft | BottomRight;
+export declare type TGesture = 'touchStart' | 'touchMove' | 'touchEnd' | 'touchCancel' | 'tap' | 'doubleTap' | 'press' | 'swipe';

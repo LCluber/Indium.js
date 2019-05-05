@@ -25,87 +25,68 @@
 
 import { Dom } from '@lcluber/weejs';
 
-class TouchStart {
-    constructor(callback) {
-        this.maxDuration = 300;
-        this.minDuration = 30;
-        this.maxMovement = 30;
+class Gesture {
+    constructor() {
+        this.callback = null;
+    }
+    activate(callback) {
         this.callback = callback;
     }
     trigger(touchHandler) {
-        this.callback(touchHandler);
+        if (this.callback) {
+            this.callback(touchHandler);
+        }
     }
 }
 
-class TouchMove {
-    constructor(callback) {
+class TouchStart extends Gesture {
+    constructor() {
+        super();
+    }
+}
+
+class TouchMove extends Gesture {
+    constructor() {
+        super();
+    }
+}
+
+class TouchEnd extends Gesture {
+    constructor() {
+        super();
+    }
+}
+
+class TouchCancel extends Gesture {
+    constructor() {
+        super();
+    }
+}
+
+class Tap extends Gesture {
+    constructor() {
+        super();
         this.maxDuration = 300;
         this.minDuration = 30;
         this.maxMovement = 30;
-        this.callback = callback;
-    }
-    trigger(touchHandler) {
-        this.callback(touchHandler);
     }
 }
 
-class TouchEnd {
-    constructor(callback) {
-        this.maxDuration = 300;
-        this.minDuration = 30;
-        this.maxMovement = 30;
-        this.callback = callback;
-    }
-    trigger(touchHandler) {
-        this.callback(touchHandler);
-    }
-}
-
-class TouchCancel {
-    constructor(callback) {
-        this.maxDuration = 300;
-        this.minDuration = 30;
-        this.maxMovement = 30;
-        this.callback = callback;
-    }
-    trigger(touchHandler) {
-        this.callback(touchHandler);
-    }
-}
-
-class Tap {
-    constructor(callback) {
-        this.maxDuration = 300;
-        this.minDuration = 30;
-        this.maxMovement = 30;
-        this.callback = callback;
-    }
-    trigger(touchHandler) {
-        this.callback(touchHandler);
-    }
-}
-
-class DoubleTap {
-    constructor(callback) {
+class DoubleTap extends Gesture {
+    constructor() {
+        super();
         this.maxDuration = 750;
         this.minDuration = 100;
         this.maxMovement = 30;
-        this.callback = callback;
-    }
-    trigger(touchHandler) {
-        this.callback(touchHandler);
     }
 }
 
-class Press {
-    constructor(callback) {
+class Press extends Gesture {
+    constructor() {
+        super();
         this.maxDuration = 0;
         this.minDuration = 750;
         this.maxMovement = 0;
-        this.callback = callback;
-    }
-    trigger(touchHandler) {
-        this.callback(touchHandler);
     }
 }
 
@@ -193,6 +174,9 @@ class Utils {
     }
     static isNegative(x) {
         return x < 0 ? true : false;
+    }
+    static isBetween(x, min, max) {
+        return x >= min && x <= max;
     }
     static validate(x) {
         return isNaN(x) ? 0.0 : x;
@@ -667,16 +651,162 @@ class Vector2 {
     }
 }
 
-class Swipe {
-    constructor(callback) {
+class Circle {
+    constructor(positionX, positionY, radius) {
+        this.shape = 'circle';
+        this._radius = 0.0;
+        this._diameter = 0.0;
+        this.position = new Vector2(positionX, positionY);
+        this.radius = radius;
+    }
+    set radius(radius) {
+        this._radius = radius;
+        this._diameter = this._radius * 2;
+    }
+    get radius() {
+        return this._radius;
+    }
+    set diameter(diameter) {
+        this._diameter = diameter;
+        this._radius = this._diameter * 0.5;
+    }
+    get diameter() {
+        return this._diameter;
+    }
+    clone() {
+        return new Circle(this.position.x, this.position.y, this.radius);
+    }
+    copy(circle) {
+        this.position.copy(circle.position);
+        this.radius = circle.radius;
+    }
+    set(positionX, positionY, radius) {
+        this.position.set(positionX, positionY);
+        this.radius = radius;
+    }
+    setPositionXY(positionX, positionY) {
+        this.position.set(positionX, positionY);
+    }
+    setPositionFromVector(position) {
+        this.position.copy(position);
+    }
+    scale(scalar) {
+        this.radius *= scalar;
+    }
+    isInside(vector) {
+        return vector.getSquaredDistance(this.position) <= this.radius * this.radius;
+    }
+    draw(context, fillColor, strokeColor, strokeWidth) {
+        context.beginPath();
+        context.arc(this.position.x, this.position.y, this.radius, 0, Trigonometry.twopi, false);
+        if (fillColor) {
+            context.fillStyle = fillColor;
+            context.fill();
+        }
+        if (strokeColor) {
+            context.strokeStyle = strokeColor;
+            context.lineWidth = strokeWidth;
+            context.stroke();
+        }
+    }
+}
+
+class Rectangle {
+    constructor(positionX, positionY, sizeX, sizeY) {
+        this.shape = 'aabb';
+        this.size = new Vector2(sizeX, sizeY);
+        this.halfSize = new Vector2();
+        this.setHalfSize();
+        this.position = new Vector2(positionX, positionY);
+        this.topLeftCorner = new Vector2(positionX - this.halfSize.x, positionY - this.halfSize.y);
+        this.bottomRightCorner = new Vector2(positionX + this.halfSize.x, positionY + this.halfSize.y);
+    }
+    clone() {
+        return new Rectangle(this.position.x, this.position.y, this.size.x, this.size.y);
+    }
+    copy(rectangle) {
+        this.setSizeFromVector(rectangle.size);
+        this.setPositionFromVector(rectangle.position);
+    }
+    set(positionX, positionY, sizeX, sizeY) {
+        this.setSizeXY(sizeX, sizeY);
+        this.setPositionXY(positionX, positionY);
+    }
+    setPositionX(x) {
+        this.setPosition('x', x);
+    }
+    setPositionY(y) {
+        this.setPosition('y', y);
+    }
+    setPosition(property, value) {
+        this.position[property] = value;
+        this.topLeftCorner[property] = value - this.halfSize[property];
+        this.bottomRightCorner[property] = value + this.halfSize[property];
+    }
+    setPositionXY(positionX, positionY) {
+        this.position.set(positionX, positionY);
+        this.setCorners();
+    }
+    setPositionFromVector(position) {
+        this.position.copy(position);
+        this.setCorners();
+    }
+    setSizeX(width) {
+        this.setSize('x', width);
+    }
+    setSizeY(height) {
+        this.setSize('y', height);
+    }
+    setSize(property, value) {
+        this.size[property] = value;
+        this.setHalfSize();
+        this.topLeftCorner[property] = this.position[property] - this.halfSize[property];
+        this.bottomRightCorner[property] = this.position[property] + this.halfSize[property];
+    }
+    setSizeXY(width, height) {
+        this.size.set(width, height);
+        this.setHalfSize();
+        this.setCorners();
+    }
+    setSizeFromVector(size) {
+        this.size.copy(size);
+        this.setHalfSize();
+        this.setCorners();
+    }
+    setCorners() {
+        this.topLeftCorner.set(this.position.x - this.halfSize.x, this.position.y - this.halfSize.y);
+        this.bottomRightCorner.set(this.position.x + this.halfSize.x, this.position.y + this.halfSize.y);
+    }
+    setHalfSize() {
+        this.halfSize.copy(this.size);
+        this.halfSize.halve();
+    }
+    isInside(vector) {
+        return (Utils.isBetween(vector.x, this.topLeftCorner.x, this.bottomRightCorner.x)
+            && Utils.isBetween(vector.y, this.topLeftCorner.y, this.bottomRightCorner.y));
+    }
+    draw(context, fillColor, strokeColor, strokeWidth) {
+        context.beginPath();
+        context.rect(this.topLeftCorner.x, this.topLeftCorner.y, this.size.x, this.size.y);
+        if (fillColor) {
+            context.fillStyle = fillColor;
+            context.fill();
+        }
+        if (strokeColor) {
+            context.strokeStyle = strokeColor;
+            context.lineWidth = strokeWidth;
+            context.stroke();
+        }
+    }
+}
+
+class Swipe extends Gesture {
+    constructor() {
+        super();
         this.maxDuration = 750;
         this.minDuration = 30;
         this.maxMovement = 0;
         this.absoluteDirection = new Vector2();
-        this.callback = callback;
-    }
-    trigger(touchHandler) {
-        this.callback(touchHandler);
     }
     getDirection(direction) {
         this.absoluteDirection.absoluteVector(direction);
@@ -686,31 +816,41 @@ class Swipe {
 
 class Zone {
     constructor() {
-        this.gestures = {};
+        this.htmlElement = null;
+        this.gestures = {
+            touchStart: new TouchStart(),
+            touchMove: new TouchMove(),
+            touchEnd: new TouchEnd(),
+            touchCancel: new TouchCancel(),
+            tap: new Tap(),
+            doubleTap: new DoubleTap(),
+            press: new Press(),
+            swipe: new Swipe()
+        };
     }
     touchStart(callback) {
-        this.gestures.touchStart = new TouchStart(callback);
+        this.gestures.touchStart.activate(callback);
     }
     touchMove(callback) {
-        this.gestures.touchMove = new TouchMove(callback);
+        this.gestures.touchMove.activate(callback);
     }
     touchEnd(callback) {
-        this.gestures.touchEnd = new TouchEnd(callback);
+        this.gestures.touchEnd.activate(callback);
     }
     touchCancel(callback) {
-        this.gestures.touchCancel = new TouchCancel(callback);
+        this.gestures.touchCancel.activate(callback);
     }
     tap(callback) {
-        this.gestures.tap = new Tap(callback);
+        this.gestures.tap.activate(callback);
     }
     doubleTap(callback) {
-        this.gestures.doubleTap = new DoubleTap(callback);
+        this.gestures.doubleTap.activate(callback);
     }
     press(callback) {
-        this.gestures.press = new Press(callback);
+        this.gestures.press.activate(callback);
     }
     swipe(callback) {
-        this.gestures.swipe = new Swipe(callback);
+        this.gestures.swipe.activate(callback);
     }
 }
 
@@ -744,11 +884,12 @@ class TouchHandler {
 class Listeners {
     constructor(htmlElement, gestures) {
         this.gestures = gestures;
-        htmlElement.addEventListener("touchstart", this.handleStart.bind(this), false);
-        htmlElement.addEventListener("touchend", this.handleEnd.bind(this), false);
-        htmlElement.addEventListener("touchcancel", this.handleCancel.bind(this), false);
-        htmlElement.addEventListener("touchmove", this.handleMove.bind(this), false);
+        htmlElement.addEventListener('touchstart', this.handleStart.bind(this), false);
+        htmlElement.addEventListener('touchmove', this.handleMove.bind(this), false);
+        htmlElement.addEventListener('touchend', this.handleEnd.bind(this), false);
+        htmlElement.addEventListener('touchcancel', this.handleCancel.bind(this), false);
         this.ongoingTouches = [];
+        this.zones = [];
     }
     handleStart(event) {
         let touches = event.changedTouches;
@@ -756,7 +897,9 @@ class Listeners {
             let touch = touches[i];
             let touchHandler = new TouchHandler(touch.identifier, touch.pageX, touch.pageY);
             this.ongoingTouches.push(touchHandler);
-            this.gestures.touchStart.trigger(touchHandler);
+            if (!this.checkZones(touchHandler, 'touchStart')) {
+                this.gestures.touchStart.trigger(touchHandler);
+            }
         }
     }
     handleMove(event) {
@@ -765,8 +908,12 @@ class Listeners {
             let touch = touches[i];
             let index = this.getOngoingTouchId(touch.identifier);
             if (index !== null) {
-                this.ongoingTouches[index].update(touch);
-                this.gestures.touchMove.trigger(this.ongoingTouches[index]);
+                let ongoingTouch = this.ongoingTouches[index];
+                ongoingTouch.update(touch);
+                if (!this.checkZones(ongoingTouch, 'touchMove')) {
+                    console.log('zone not found', this.zones);
+                    this.gestures.touchMove.trigger(ongoingTouch);
+                }
             }
         }
     }
@@ -776,9 +923,12 @@ class Listeners {
             let touch = touches[i];
             let index = this.getOngoingTouchId(touch.identifier);
             if (index !== null) {
-                this.ongoingTouches[index].end();
-                this.gestures.touchEnd.trigger(this.ongoingTouches[index]);
+                let ongoingTouch = this.ongoingTouches[index];
+                ongoingTouch.end();
                 this.ongoingTouches.splice(index, 1);
+                if (!this.checkZones(ongoingTouch, 'touchEnd')) {
+                    this.gestures.touchEnd.trigger(ongoingTouch);
+                }
             }
         }
     }
@@ -789,10 +939,22 @@ class Listeners {
             let touch = touches[i];
             let index = this.getOngoingTouchId(touch.identifier);
             if (index !== null) {
-                this.gestures.touchCancel.trigger(this.ongoingTouches[index]);
+                let ongoingTouch = this.ongoingTouches[index];
                 this.ongoingTouches.splice(index, 1);
+                if (!this.checkZones(ongoingTouch, 'touchCancel')) {
+                    this.gestures.touchCancel.trigger(ongoingTouch);
+                }
             }
         }
+    }
+    checkZones(ongoingTouch, gesture) {
+        for (let zone of this.zones) {
+            if (zone.contains(ongoingTouch.lastPosition)) {
+                zone.gestures[gesture].trigger(ongoingTouch);
+                return true;
+            }
+        }
+        return false;
     }
     getOngoingTouchId(id) {
         for (let i = 0; i < this.ongoingTouches.length; i++) {
@@ -804,12 +966,155 @@ class Listeners {
     }
 }
 
-class Screen extends Zone {
+class TouchScreen extends Zone {
     constructor(htmlElementId) {
         super();
         this.htmlElement = Dom.findById(htmlElementId);
-        this.listeners = new Listeners(this.htmlElement, this.gestures);
+        if (this.htmlElement) {
+            this.listeners = new Listeners(this.htmlElement, this.gestures);
+        }
+    }
+    addZone(zone) {
+        if (this.htmlElement) {
+            zone.htmlElement = this.htmlElement;
+            this.listeners.zones.push(zone);
+        }
+    }
+    contains() {
+        return true;
     }
 }
 
-export { Screen };
+class Circle$1 extends Zone {
+    constructor(positionX, positionY, radius) {
+        super();
+        this.circle = new Circle(positionX, positionY, radius);
+    }
+    contains(touchPosition) {
+        return this.circle.isInside(touchPosition);
+    }
+}
+
+class Rectangle$1 extends Zone {
+    constructor(positionX, positionY, sizeX, sizeY) {
+        super();
+        this.rectangle = new Rectangle(positionX, positionY, sizeX, sizeY);
+    }
+    contains(touchPosition) {
+        return this.rectangle.isInside(touchPosition);
+    }
+}
+
+class Top extends Zone {
+    constructor(limit) {
+        super();
+        this.limit = limit;
+    }
+    contains(touchPosition) {
+        let elementHeight = this.htmlElement.offsetHeight;
+        let limit = this.limit * elementHeight;
+        if (touchPosition.y <= limit) {
+            return true;
+        }
+        return false;
+    }
+}
+
+class Right extends Zone {
+    constructor(limit) {
+        super();
+        this.limit = limit;
+    }
+    contains(touchPosition) {
+        let elementWidth = this.htmlElement.offsetWidth;
+        let limit = elementWidth - this.limit * elementWidth;
+        if (touchPosition.x >= limit) {
+            return true;
+        }
+        return false;
+    }
+}
+
+class Bottom extends Zone {
+    constructor(limit) {
+        super();
+        this.limit = limit;
+    }
+    contains(touchPosition) {
+        let elementHeight = this.htmlElement.offsetHeight;
+        let limit = elementHeight - this.limit * elementHeight;
+        if (touchPosition.y >= limit) {
+            return true;
+        }
+        return false;
+    }
+}
+
+class Left extends Zone {
+    constructor(limit) {
+        super();
+        this.limit = limit;
+    }
+    contains(touchPosition) {
+        let elementWidth = this.htmlElement.offsetWidth;
+        let limit = this.limit * elementWidth;
+        if (touchPosition.x <= limit) {
+            return true;
+        }
+        return false;
+    }
+}
+
+class TopLeft extends Zone {
+    constructor(limit) {
+        super();
+        this.limit = limit;
+    }
+    contains(touchPosition) {
+        if (touchPosition.y < this.limit) {
+            return true;
+        }
+        return false;
+    }
+}
+
+class TopRight extends Zone {
+    constructor(limit) {
+        super();
+        this.limit = limit;
+    }
+    contains(touchPosition) {
+        if (touchPosition.y < this.limit) {
+            return true;
+        }
+        return false;
+    }
+}
+
+class BottomLeft extends Zone {
+    constructor(limit) {
+        super();
+        this.limit = limit;
+    }
+    contains(touchPosition) {
+        if (touchPosition.y < this.limit) {
+            return true;
+        }
+        return false;
+    }
+}
+
+class BottomRight extends Zone {
+    constructor(limit) {
+        super();
+        this.limit = limit;
+    }
+    contains(touchPosition) {
+        if (touchPosition.y < this.limit) {
+            return true;
+        }
+        return false;
+    }
+}
+
+export { TouchScreen, Circle$1 as Circle, Rectangle$1 as Rectangle, Top, Right, Bottom, Left, TopLeft, TopRight, BottomLeft, BottomRight };

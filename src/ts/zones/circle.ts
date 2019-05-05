@@ -1,7 +1,8 @@
 import { Zone } from './zone';
+import { IZone }  from '../interfaces';
 import { Circle as T6Circle, Vector2 } from '@lcluber/type6js';
 
-export class Circle extends Zone {
+export class Circle extends Zone implements IZone {
 
   private circle: T6Circle ;
 
@@ -10,11 +11,8 @@ export class Circle extends Zone {
     this.circle = new T6Circle( positionX, positionY, radius );
   }
 
-  private contains(touchPosition: Vector2): boolean {
-    // if (this.circle.contains(touchPosition)) {
-    //   return true;
-    // }
-    return false;
+  public contains(touchPosition: Vector2): boolean {
+    return this.circle.isInside(touchPosition);
   }
 
 }

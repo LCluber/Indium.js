@@ -33,7 +33,7 @@ See a basic example **[here](http://vortalcombat.roostrjs.com)**.
 ```
 
 ```javascript
-import { TouchScreen } from '@lcluber/indiumjs';
+import { TouchScreen, Right } from '@lcluber/indiumjs';
 
 function shipMove(touch) {
   console.log('touch',touch);
@@ -43,11 +43,19 @@ function shipStop(touch) {
   console.log('end',touch);
 }
 
+function shipShoot(touch) {
+  console.log('shoot',touch);
+}
+
 var touchScreen = new TouchScreen('myCanvas');
 touchScreen.touchStart(shipMove);
 touchScreen.touchMove(shipMove);
 touchScreen.touchEnd(shipStop);
 touchScreen.touchCancel(shipStop);
+
+var bottom = new Right(0.3);
+bottom.touchStart(shipShoot);
+touchScreen.addZone(bottom);
 
 ```
 
@@ -68,6 +76,10 @@ function shipStop(touch) {
   console.log('end',touch);
 }
 
+function shipShoot(touch) {
+  console.log('shoot',touch);
+}
+
 var touchScreen = new Indium.TouchScreen('myCanvas');
 
 touchScreen.touchStart(shipMove);
@@ -75,20 +87,42 @@ touchScreen.touchMove(shipMove);
 touchScreen.touchEnd(shipStop);
 touchScreen.touchCancel(shipStop);
 
-var bottom = new Indium.Zones.bottom();
+var bottom = new Indium.Right(0.3);
 bottom.touchStart(shipShoot);
-touchScreen.Zones.add(bottom);
+touchScreen.addZone(bottom);
 
 ```
 
 ## API Reference
 
 ```javascript
+type TZone = Top | Right | Bottom | Left;
 
-Screen.touchStart(callback: Function);
-Screen.touchMove(callback: Function);
-Screen.touchEnd(callback: Function);
-Screen.touchCancel(callback: Function);
+TouchScreen.touchStart(callback: Function);
+TouchScreen.touchMove(callback: Function);
+TouchScreen.touchEnd(callback: Function);
+TouchScreen.touchCancel(callback: Function);
+touchScreen.addZone(zone: TZone);
+
+Top.touchStart(callback: Function);
+Top.touchMove(callback: Function);
+Top.touchEnd(callback: Function);
+Top.touchCancel(callback: Function);
+
+Left.touchStart(callback: Function);
+Left.touchMove(callback: Function);
+Left.touchEnd(callback: Function);
+Left.touchCancel(callback: Function);
+
+Right.touchStart(callback: Function);
+Right.touchMove(callback: Function);
+Right.touchEnd(callback: Function);
+Right.touchCancel(callback: Function);
+
+Bottom.touchStart(callback: Function);
+Bottom.touchMove(callback: Function);
+Bottom.touchEnd(callback: Function);
+Bottom.touchCancel(callback: Function);
 
 ```
 

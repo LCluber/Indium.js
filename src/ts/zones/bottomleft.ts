@@ -1,6 +1,8 @@
 import { Zone } from './zone';
+import { IZone }  from '../interfaces';
+import { Vector2 } from '@lcluber/type6js';
 
-export class BottomLeft extends Zone {
+export class BottomLeft extends Zone implements IZone {
 
   private limit: number ;
 
@@ -9,8 +11,8 @@ export class BottomLeft extends Zone {
     this.limit = limit;
   }
 
-  private contains(y: number): boolean {
-    if (y < this.limit) {
+  public contains(touchPosition: Vector2): boolean {
+    if (touchPosition.y < this.limit) {
       return true;
     }
     return false;

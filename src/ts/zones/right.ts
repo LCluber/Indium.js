@@ -1,16 +1,20 @@
 import { Zone } from './zone';
+import { IZone }  from '../interfaces';
+import { Vector2 } from '@lcluber/type6js';
 
-export class Right extends Zone {
+export class Right extends Zone implements IZone {
 
-  private limit: number ;
+  private limit: number;
 
   constructor(limit: number) {
     super();
     this.limit = limit;
   }
 
-  private contains(x: number): boolean {
-    if (x > this.limit) {
+  public contains(touchPosition: Vector2): boolean {
+    let elementWidth = this.htmlElement!.offsetWidth;
+    let limit = elementWidth - this.limit * elementWidth;
+    if (touchPosition.x >= limit) {
       return true;
     }
     return false;
