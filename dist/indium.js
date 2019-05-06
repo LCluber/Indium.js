@@ -177,9 +177,6 @@ class Utils {
     static isNegative(x) {
         return x < 0 ? true : false;
     }
-    static isBetween(x, min, max) {
-        return x >= min && x <= max;
-    }
     static validate(x) {
         return isNaN(x) ? 0.0 : x;
     }
@@ -695,9 +692,6 @@ class Circle {
     scale(scalar) {
         this.radius *= scalar;
     }
-    isInside(vector) {
-        return vector.getSquaredDistance(this.position) <= this.radius * this.radius;
-    }
     draw(context, fillColor, strokeColor, strokeWidth) {
         context.beginPath();
         context.arc(this.position.x, this.position.y, this.radius, 0, Trigonometry.twopi, false);
@@ -783,10 +777,6 @@ class Rectangle {
         this.halfSize.copy(this.size);
         this.halfSize.halve();
     }
-    isInside(vector) {
-        return (Utils.isBetween(vector.x, this.topLeftCorner.x, this.bottomRightCorner.x)
-            && Utils.isBetween(vector.y, this.topLeftCorner.y, this.bottomRightCorner.y));
-    }
     draw(context, fillColor, strokeColor, strokeWidth) {
         context.beginPath();
         context.rect(this.topLeftCorner.x, this.topLeftCorner.y, this.size.x, this.size.y);
@@ -802,7 +792,49 @@ class Rectangle {
     }
 }
 
-class Swipe extends Gesture {
+class SwipeUp extends Gesture {
+    constructor() {
+        super();
+        this.maxDuration = 750;
+        this.minDuration = 30;
+        this.maxMovement = 0;
+        this.absoluteDirection = new Vector2();
+    }
+    getDirection(direction) {
+        this.absoluteDirection.absoluteVector(direction);
+        return this.absoluteDirection.x >= this.absoluteDirection.y ? (this.absoluteDirection.x > 0 ? 'Left' : 'Right') : (this.absoluteDirection.y > 0 ? 'Up' : 'Down');
+    }
+}
+
+class SwipeLeft extends Gesture {
+    constructor() {
+        super();
+        this.maxDuration = 750;
+        this.minDuration = 30;
+        this.maxMovement = 0;
+        this.absoluteDirection = new Vector2();
+    }
+    getDirection(direction) {
+        this.absoluteDirection.absoluteVector(direction);
+        return this.absoluteDirection.x >= this.absoluteDirection.y ? (this.absoluteDirection.x > 0 ? 'Left' : 'Right') : (this.absoluteDirection.y > 0 ? 'Up' : 'Down');
+    }
+}
+
+class SwipeDown extends Gesture {
+    constructor() {
+        super();
+        this.maxDuration = 750;
+        this.minDuration = 30;
+        this.maxMovement = 0;
+        this.absoluteDirection = new Vector2();
+    }
+    getDirection(direction) {
+        this.absoluteDirection.absoluteVector(direction);
+        return this.absoluteDirection.x >= this.absoluteDirection.y ? (this.absoluteDirection.x > 0 ? 'Left' : 'Right') : (this.absoluteDirection.y > 0 ? 'Up' : 'Down');
+    }
+}
+
+class SwipeRight extends Gesture {
     constructor() {
         super();
         this.maxDuration = 750;
@@ -827,7 +859,10 @@ class Zone {
             tap: new Tap(),
             doubleTap: new DoubleTap(),
             press: new Press(),
-            swipe: new Swipe()
+            swipeUp: new SwipeUp(),
+            swipeLeft: new SwipeLeft(),
+            swipeDown: new SwipeDown(),
+            swipeRight: new SwipeRight()
         };
     }
     touchStart(callback) {
@@ -851,8 +886,17 @@ class Zone {
     press(callback) {
         this.gestures.press.activate(callback);
     }
-    swipe(callback) {
-        this.gestures.swipe.activate(callback);
+    swipeUp(callback) {
+        this.gestures.swipeUp.activate(callback);
+    }
+    swipeLeft(callback) {
+        this.gestures.swipeLeft.activate(callback);
+    }
+    swipeDown(callback) {
+        this.gestures.swipeDown.activate(callback);
+    }
+    swipeRight(callback) {
+        this.gestures.swipeRight.activate(callback);
     }
 }
 
@@ -991,7 +1035,7 @@ class Circle$1 extends Zone {
         this.circle = new Circle(positionX, positionY, radius);
     }
     contains(touchPosition) {
-        return this.circle.isInside(touchPosition);
+        return true;
     }
 }
 
@@ -1001,7 +1045,7 @@ class Rectangle$1 extends Zone {
         this.rectangle = new Rectangle(positionX, positionY, sizeX, sizeY);
     }
     contains(touchPosition) {
-        return this.rectangle.isInside(touchPosition);
+        return true;
     }
 }
 
@@ -1066,12 +1110,17 @@ class Left extends Zone {
 }
 
 class TopLeft extends Zone {
-    constructor(limit) {
+    constructor(topLimit, leftLimit) {
         super();
-        this.limit = limit;
+        this.topLimit = topLimit;
+        this.leftLimit = leftLimit;
     }
     contains(touchPosition) {
-        if (touchPosition.y < this.limit) {
+        let elementWidth = this.htmlElement.offsetWidth;
+        let elementHeight = this.htmlElement.offsetHeight;
+        let topLimit = this.topLimit * elementHeight;
+        let leftLimit = this.leftLimit * elementWidth;
+        if (touchPosition.y <= topLimit && touchPosition.x <= leftLimit) {
             return true;
         }
         return false;
@@ -1079,12 +1128,17 @@ class TopLeft extends Zone {
 }
 
 class TopRight extends Zone {
-    constructor(limit) {
+    constructor(topLimit, rightLimit) {
         super();
-        this.limit = limit;
+        this.topLimit = topLimit;
+        this.rightLimit = rightLimit;
     }
     contains(touchPosition) {
-        if (touchPosition.y < this.limit) {
+        let elementWidth = this.htmlElement.offsetWidth;
+        let elementHeight = this.htmlElement.offsetHeight;
+        let topLimit = this.topLimit * elementHeight;
+        let rightLimit = elementWidth - this.rightLimit * elementWidth;
+        if (touchPosition.y <= topLimit && touchPosition.x >= rightLimit) {
             return true;
         }
         return false;
@@ -1092,12 +1146,17 @@ class TopRight extends Zone {
 }
 
 class BottomLeft extends Zone {
-    constructor(limit) {
+    constructor(bottomLimit, leftLimit) {
         super();
-        this.limit = limit;
+        this.bottomLimit = bottomLimit;
+        this.leftLimit = leftLimit;
     }
     contains(touchPosition) {
-        if (touchPosition.y < this.limit) {
+        let elementWidth = this.htmlElement.offsetWidth;
+        let elementHeight = this.htmlElement.offsetHeight;
+        let bottomLimit = elementHeight - this.bottomLimit * elementHeight;
+        let leftLimit = this.leftLimit * elementWidth;
+        if (touchPosition.y >= bottomLimit && touchPosition.x <= leftLimit) {
             return true;
         }
         return false;
@@ -1105,12 +1164,17 @@ class BottomLeft extends Zone {
 }
 
 class BottomRight extends Zone {
-    constructor(limit) {
+    constructor(bottomLimit, rightLimit) {
         super();
-        this.limit = limit;
+        this.bottomLimit = bottomLimit;
+        this.rightLimit = rightLimit;
     }
     contains(touchPosition) {
-        if (touchPosition.y < this.limit) {
+        let elementWidth = this.htmlElement.offsetWidth;
+        let elementHeight = this.htmlElement.offsetHeight;
+        let bottomLimit = elementHeight - this.bottomLimit * elementHeight;
+        let rightLimit = elementWidth - this.rightLimit * elementWidth;
+        if (touchPosition.y >= bottomLimit && touchPosition.x >= rightLimit) {
             return true;
         }
         return false;

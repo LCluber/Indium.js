@@ -12,7 +12,8 @@ export class Circle extends Zone implements IZone {
   }
 
   public contains(touchPosition: Vector2): boolean {
-    return this.circle.isInside(touchPosition);
+    return true;
+    //return this.circle.isInside(touchPosition);
   }
 
 }
