@@ -12,7 +12,8 @@ export class Rectangle extends Zone implements IZone {
   }
 
   public contains(touchPosition: Vector2): boolean {
-    return this.rectangle.isInside(touchPosition);
+    return true;
+    // return this.rectangle.isInside(touchPosition);
   }
 
 }

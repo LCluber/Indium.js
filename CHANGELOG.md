@@ -1,3 +1,7 @@
+Version 0.2.1 (May 6th 2019)
+-----------------------------
+ * minor fixes
+
 Version 0.2.0 (May 5th 2019)
 -----------------------------
  * Added zones : Top, Left, Right, Bottom

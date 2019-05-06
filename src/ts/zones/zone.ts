@@ -5,7 +5,10 @@ import { TouchCancel }   from '../gestures/touchCancel';
 import { Tap }           from '../gestures/tap';
 import { DoubleTap }     from '../gestures/doubletap';
 import { Press }         from '../gestures/press';
-import { Swipe }         from '../gestures/swipe';
+import { SwipeUp }       from '../gestures/swipeup';
+import { SwipeLeft }     from '../gestures/swipeleft';
+import { SwipeDown }     from '../gestures/swipedown';
+import { SwipeRight }    from '../gestures/swiperight';
 import { IGestures }     from '../interfaces';
 import { THTMLElements } from '../types';
 import { Logger }        from '@lcluber/mouettejs';
@@ -28,7 +31,10 @@ export abstract class Zone {
       tap:        new Tap(),
       doubleTap:  new DoubleTap(),
       press:      new Press(),
-      swipe:      new Swipe()
+      swipeUp:    new SwipeUp(),
+      swipeLeft:  new SwipeLeft(),
+      swipeDown:  new SwipeDown(),
+      swipeRight: new SwipeRight()
     };
   }
 
@@ -60,8 +66,20 @@ export abstract class Zone {
     this.gestures.press.activate(callback);
   }
 
-  public swipe(callback: Function): void {
-    this.gestures.swipe.activate(callback);
+  public swipeUp(callback: Function): void {
+    this.gestures.swipeUp.activate(callback);
+  }
+  
+  public swipeLeft(callback: Function): void {
+    this.gestures.swipeLeft.activate(callback);
+  }
+  
+  public swipeDown(callback: Function): void {
+    this.gestures.swipeDown.activate(callback);
+  }
+  
+  public swipeRight(callback: Function): void {
+    this.gestures.swipeRight.activate(callback);
   }
 
   abstract contains(touchPosition: Vector2): boolean;

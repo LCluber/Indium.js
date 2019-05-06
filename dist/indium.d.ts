@@ -49,7 +49,10 @@ export interface IGestures {
     tap: IGesture;
     doubleTap: IGesture;
     press: IGesture;
-    swipe: IGesture;
+    swipeUp: IGesture;
+    swipeLeft: IGesture;
+    swipeDown: IGesture;
+    swipeRight: IGesture;
     [key: string]: IGesture;
 }
 export interface IZone {
@@ -109,4 +112,4 @@ export declare class TouchScreen extends Zone {
 
 export declare type THTMLElements = HTMLElement | HTMLCanvasElement | null;
 export declare type TZone = Circle | Rectangle | Top | Right | Bottom | Left | TopLeft | TopRight | BottomLeft | BottomRight;
-export declare type TGesture = 'touchStart' | 'touchMove' | 'touchEnd' | 'touchCancel' | 'tap' | 'doubleTap' | 'press' | 'swipe';
+export declare type TGesture = 'touchStart' | 'touchMove' | 'touchEnd' | 'touchCancel' | 'tap' | 'doubleTap' | 'press' | 'swipeTop' | 'swipeLeft' | 'swipeBottom' | 'swipeRight';

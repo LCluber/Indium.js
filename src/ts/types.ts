@@ -12,4 +12,4 @@ import { BottomRight } from './zones/bottomright';
 export type THTMLElements = HTMLElement | HTMLCanvasElement | null;
 export type TZone = Circle | Rectangle | Top | Right | Bottom | Left | TopLeft | TopRight | BottomLeft | BottomRight;
 // 'left' | 'right' | 'top' | 'bottom' | 'circle' | 'rectangle' | 'topLeft' | 'topRight' | 'bottomLeft' | 'bottomRight';
-export type TGesture = 'touchStart' | 'touchMove' | 'touchEnd' | 'touchCancel' | 'tap' | 'doubleTap' | 'press' | 'swipe';
+export type TGesture = 'touchStart' | 'touchMove' | 'touchEnd' | 'touchCancel' | 'tap' | 'doubleTap' | 'press' | 'swipeTop' | 'swipeLeft' | 'swipeBottom' | 'swipeRight';

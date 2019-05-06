@@ -27,7 +27,10 @@ export interface IGestures {
   tap:         IGesture;
   doubleTap:   IGesture;
   press:       IGesture;
-  swipe:       IGesture;
+  swipeUp:     IGesture;
+  swipeLeft:   IGesture;
+  swipeDown:   IGesture;
+  swipeRight:  IGesture;
   [key: string]: IGesture
 }
 
