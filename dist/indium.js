@@ -177,6 +177,9 @@ class Utils {
     static isNegative(x) {
         return x < 0 ? true : false;
     }
+    static isBetween(x, min, max) {
+        return x >= min && x <= max;
+    }
     static validate(x) {
         return isNaN(x) ? 0.0 : x;
     }
@@ -692,6 +695,9 @@ class Circle {
     scale(scalar) {
         this.radius *= scalar;
     }
+    isInside(vector) {
+        return vector.getSquaredDistance(this.position) <= this.radius * this.radius;
+    }
     draw(context, fillColor, strokeColor, strokeWidth) {
         context.beginPath();
         context.arc(this.position.x, this.position.y, this.radius, 0, Trigonometry.twopi, false);
@@ -776,6 +782,10 @@ class Rectangle {
     setHalfSize() {
         this.halfSize.copy(this.size);
         this.halfSize.halve();
+    }
+    isInside(vector) {
+        return (Utils.isBetween(vector.x, this.topLeftCorner.x, this.bottomRightCorner.x)
+            && Utils.isBetween(vector.y, this.topLeftCorner.y, this.bottomRightCorner.y));
     }
     draw(context, fillColor, strokeColor, strokeWidth) {
         context.beginPath();

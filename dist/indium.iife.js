@@ -372,6 +372,11 @@ var Indium = (function (exports) {
                 return x < 0 ? true : false;
             }
         }, {
+            key: 'isBetween',
+            value: function isBetween(x, min, max) {
+                return x >= min && x <= max;
+            }
+        }, {
             key: 'validate',
             value: function validate(x) {
                 return isNaN(x) ? 0.0 : x;
@@ -1083,6 +1088,11 @@ var Indium = (function (exports) {
                 this.radius *= scalar;
             }
         }, {
+            key: 'isInside',
+            value: function isInside(vector) {
+                return vector.getSquaredDistance(this.position) <= this.radius * this.radius;
+            }
+        }, {
             key: 'draw',
             value: function draw(context, fillColor, strokeColor, strokeWidth) {
                 context.beginPath();
@@ -1222,6 +1232,11 @@ var Indium = (function (exports) {
             value: function setHalfSize() {
                 this.halfSize.copy(this.size);
                 this.halfSize.halve();
+            }
+        }, {
+            key: 'isInside',
+            value: function isInside(vector) {
+                return Utils.isBetween(vector.x, this.topLeftCorner.x, this.bottomRightCorner.x) && Utils.isBetween(vector.y, this.topLeftCorner.y, this.bottomRightCorner.y);
             }
         }, {
             key: 'draw',
