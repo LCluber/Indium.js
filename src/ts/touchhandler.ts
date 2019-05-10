@@ -23,20 +23,23 @@ export class TouchHandler /*extends Touch*/ {
   startPosition:    Vector2;
   lastPosition:     Vector2;
   direction:        Vector2;
+  radius:           Vector2;
   squaredDistance:  number;
 
-  constructor (/*touchInit: TouchInit*/identifier: number, pageX: number, pageY: number) {
+  constructor (/*touchInit: TouchInit*/identifier: number, pageX: number, pageY: number, radiusX: number, radiusY: number) {
     // super(touchInit);
     this.identifier      =   identifier;
     this.startTime       = + new Date();
     this.startPosition   =   new Vector2(pageX, pageY);
     this.lastPosition    =   new Vector2(pageX, pageY);
     this.direction       =   new Vector2();
+    this.radius          =   new Vector2(radiusX, radiusY);
     this.squaredDistance =   0;
   }
 
-  public update(touchInit: TouchInit): TouchHandler {
-    this.lastPosition = new Vector2(touchInit.pageX, touchInit.pageY);
+  public update(pageX: number, pageY: number, radiusX: number, radiusY: number): TouchHandler {
+    this.lastPosition.set(pageX, pageY);
+    this.radius.set(radiusX, radiusY);
     this.setDirection();
     this.setDistance();
     return this;

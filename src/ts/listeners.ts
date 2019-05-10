@@ -29,7 +29,7 @@ export class Listeners {
     let touches = event.changedTouches;
     for (let i = 0; i < touches.length; i++) {
       let touch = touches[i];
-      let touchHandler = new TouchHandler(touch.identifier, touch.pageX, touch.pageY );
+      let touchHandler = new TouchHandler(touch.identifier, touch.pageX, touch.pageY, touch.radiusX, touch.radiusY );
       this.ongoingTouches.push(touchHandler);
       if(!this.checkZones(touchHandler, 'touchStart')) {
         this.gestures.touchStart.trigger(touchHandler);
@@ -44,7 +44,7 @@ export class Listeners {
       let index = this.getOngoingTouchId(touch.identifier);
       if (index !== null) {
         let ongoingTouch = this.ongoingTouches[index];
-        ongoingTouch.update(touch);
+        ongoingTouch.update(touch.pageX, touch.pageY, touch.radiusX, touch.radiusY);
         if(!this.checkZones(ongoingTouch, 'touchMove')) {
           this.gestures.touchMove.trigger(ongoingTouch);
         }

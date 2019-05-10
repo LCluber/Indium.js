@@ -1,3 +1,7 @@
+Version 0.2.1 (May 10th 2019)
+-----------------------------
+ * Added radius Vector to the TouchHandler class
+
 Version 0.2.1 (May 6th 2019)
 -----------------------------
  * minor fixes

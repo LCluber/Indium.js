@@ -84,9 +84,10 @@ export declare class TouchHandler {
     startPosition: Vector2;
     lastPosition: Vector2;
     direction: Vector2;
+    radius: Vector2;
     squaredDistance: number;
-    constructor(identifier: number, pageX: number, pageY: number);
-    update(touchInit: TouchInit): TouchHandler;
+    constructor(identifier: number, pageX: number, pageY: number, radiusX: number, radiusY: number);
+    update(pageX: number, pageY: number, radiusX: number, radiusY: number): TouchHandler;
     private setDirection;
     private setDistance;
     end(): void;

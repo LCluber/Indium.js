@@ -2004,16 +2004,18 @@ var Indium = (function (exports) {
     }();
 
     var TouchHandler = function () {
-        function TouchHandler(identifier, pageX, pageY) {
+        function TouchHandler(identifier, pageX, pageY, radiusX, radiusY) {
             this.identifier = identifier;
             this.startTime = +new Date();
             this.startPosition = new Vector2(pageX, pageY);
             this.lastPosition = new Vector2(pageX, pageY);
             this.direction = new Vector2();
+            this.radius = new Vector2(radiusX, radiusY);
             this.squaredDistance = 0;
         }
-        TouchHandler.prototype.update = function (touchInit) {
-            this.lastPosition = new Vector2(touchInit.pageX, touchInit.pageY);
+        TouchHandler.prototype.update = function (pageX, pageY, radiusX, radiusY) {
+            this.lastPosition.set(pageX, pageY);
+            this.radius.set(radiusX, radiusY);
             this.setDirection();
             this.setDistance();
             return this;
@@ -2045,7 +2047,7 @@ var Indium = (function (exports) {
             var touches = event.changedTouches;
             for (var i = 0; i < touches.length; i++) {
                 var touch = touches[i];
-                var touchHandler = new TouchHandler(touch.identifier, touch.pageX, touch.pageY);
+                var touchHandler = new TouchHandler(touch.identifier, touch.pageX, touch.pageY, touch.radiusX, touch.radiusY);
                 this.ongoingTouches.push(touchHandler);
                 if (!this.checkZones(touchHandler, 'touchStart')) {
                     this.gestures.touchStart.trigger(touchHandler);
@@ -2059,7 +2061,7 @@ var Indium = (function (exports) {
                 var index = this.getOngoingTouchId(touch.identifier);
                 if (index !== null) {
                     var ongoingTouch = this.ongoingTouches[index];
-                    ongoingTouch.update(touch);
+                    ongoingTouch.update(touch.pageX, touch.pageY, touch.radiusX, touch.radiusY);
                     if (!this.checkZones(ongoingTouch, 'touchMove')) {
                         this.gestures.touchMove.trigger(ongoingTouch);
                     }

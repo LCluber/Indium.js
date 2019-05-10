@@ -911,16 +911,18 @@ class Zone {
 }
 
 class TouchHandler {
-    constructor(identifier, pageX, pageY) {
+    constructor(identifier, pageX, pageY, radiusX, radiusY) {
         this.identifier = identifier;
         this.startTime = +new Date();
         this.startPosition = new Vector2(pageX, pageY);
         this.lastPosition = new Vector2(pageX, pageY);
         this.direction = new Vector2();
+        this.radius = new Vector2(radiusX, radiusY);
         this.squaredDistance = 0;
     }
-    update(touchInit) {
-        this.lastPosition = new Vector2(touchInit.pageX, touchInit.pageY);
+    update(pageX, pageY, radiusX, radiusY) {
+        this.lastPosition.set(pageX, pageY);
+        this.radius.set(radiusX, radiusY);
         this.setDirection();
         this.setDistance();
         return this;
@@ -951,7 +953,7 @@ class Listeners {
         let touches = event.changedTouches;
         for (let i = 0; i < touches.length; i++) {
             let touch = touches[i];
-            let touchHandler = new TouchHandler(touch.identifier, touch.pageX, touch.pageY);
+            let touchHandler = new TouchHandler(touch.identifier, touch.pageX, touch.pageY, touch.radiusX, touch.radiusY);
             this.ongoingTouches.push(touchHandler);
             if (!this.checkZones(touchHandler, 'touchStart')) {
                 this.gestures.touchStart.trigger(touchHandler);
@@ -965,7 +967,7 @@ class Listeners {
             let index = this.getOngoingTouchId(touch.identifier);
             if (index !== null) {
                 let ongoingTouch = this.ongoingTouches[index];
-                ongoingTouch.update(touch);
+                ongoingTouch.update(touch.pageX, touch.pageY, touch.radiusX, touch.radiusY);
                 if (!this.checkZones(ongoingTouch, 'touchMove')) {
                     this.gestures.touchMove.trigger(ongoingTouch);
                 }
