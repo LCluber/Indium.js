@@ -1,3 +1,7 @@
+Version 0.2.3 (May 25th 2019)
+-----------------------------
+ * Added prevent default behaviour event
+
 Version 0.2.2 (May 10th 2019)
 -----------------------------
  * Added radius Vector to the TouchHandler class

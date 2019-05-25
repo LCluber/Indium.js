@@ -950,6 +950,7 @@ class Listeners {
         this.zones = [];
     }
     handleStart(event) {
+        event.preventDefault();
         let touches = event.changedTouches;
         for (let i = 0; i < touches.length; i++) {
             let touch = touches[i];
@@ -961,6 +962,7 @@ class Listeners {
         }
     }
     handleMove(event) {
+        event.preventDefault();
         let touches = event.changedTouches;
         for (let i = 0; i < touches.length; i++) {
             let touch = touches[i];
@@ -975,6 +977,7 @@ class Listeners {
         }
     }
     handleEnd(event) {
+        event.preventDefault();
         let touches = event.changedTouches;
         for (let i = 0; i < touches.length; i++) {
             let touch = touches[i];

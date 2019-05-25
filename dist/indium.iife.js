@@ -2044,6 +2044,7 @@ var Indium = (function (exports) {
             this.zones = [];
         }
         Listeners.prototype.handleStart = function (event) {
+            event.preventDefault();
             var touches = event.changedTouches;
             for (var i = 0; i < touches.length; i++) {
                 var touch = touches[i];
@@ -2055,6 +2056,7 @@ var Indium = (function (exports) {
             }
         };
         Listeners.prototype.handleMove = function (event) {
+            event.preventDefault();
             var touches = event.changedTouches;
             for (var i = 0; i < touches.length; i++) {
                 var touch = touches[i];
@@ -2069,6 +2071,7 @@ var Indium = (function (exports) {
             }
         };
         Listeners.prototype.handleEnd = function (event) {
+            event.preventDefault();
             var touches = event.changedTouches;
             for (var i = 0; i < touches.length; i++) {
                 var touch = touches[i];

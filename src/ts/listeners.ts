@@ -26,6 +26,7 @@ export class Listeners {
   }
 
   public handleStart(event: TouchEvent): void {
+    event.preventDefault();
     let touches = event.changedTouches;
     for (let i = 0; i < touches.length; i++) {
       let touch = touches[i];
@@ -38,6 +39,7 @@ export class Listeners {
   }
 
   public handleMove(event: TouchEvent): void {
+    event.preventDefault();
     let touches = event.changedTouches;
     for (let i = 0; i < touches.length; i++) {
       let touch = touches[i];
@@ -53,8 +55,8 @@ export class Listeners {
   }
 
   public handleEnd(event: TouchEvent): void {
+    event.preventDefault();
     let touches = event.changedTouches;
-
     for (let i = 0; i < touches.length; i++) {
       let touch = touches[i];
       let index = this.getOngoingTouchId(touch.identifier);

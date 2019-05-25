@@ -1,6 +1,6 @@
 {
   "name": "@lcluber/indiumjs",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "Touch gestures library written in TypeScript with multiple touches detection.",
   "keywords": [
     "Touch gestures"
