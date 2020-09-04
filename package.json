@@ -72,7 +72,7 @@
     "grunt-typedoc": "0.2.4",
     "grunt-rollup": "9.0.0",
     "grunt-sass": "3.0.1",
-    "node-sass": "4.11.0",
+    "node-sass": "4.13.1",
     "rollup-plugin-babel": "3.0.4",
     "rollup-plugin-node-resolve": "3.3.0",
     "time-grunt": "1.4.0",
